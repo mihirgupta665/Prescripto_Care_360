@@ -5,8 +5,8 @@ import { NavLink, useNavigate } from "react-router-dom"
 
 const Navbar = () => {
 
-    const navigate = useNavigate(); 
-    const [showMenu, setShowMenu]  = useState(false)
+    const navigate = useNavigate();
+    const [showMenu, setShowMenu] = useState(false)
     const [token, setToken] = useState(true)
 
     return (
@@ -30,18 +30,7 @@ const Navbar = () => {
                     <hr className="border-none one outline-none h-0.5 bg-primary w-3/5 m-auto hidden" />
                 </NavLink>
             </ul>
-            <div className="flex items-center gap-4">
-                {
-                    token
-                    ? <div className="flex items-center gap-2 cursor-pointer group relative">
-                        {/* try to add user personalized picture */}
-                        <img className="w-8 rounded-full" src={assets.profile_pic} alt="" />
-                        <img className="w-2.5" src={assets.dropdown_icon} alt="" />
-                    </div>
-                    : <button onClick={() => { navigate("/login") }} className="bg-primary text-white font-light px-8 py-3 rounded-full hidden md:block">CREATE ACCOUNT</button>
-                }
-                
-            </div>
+
         </div>
     )
 }
