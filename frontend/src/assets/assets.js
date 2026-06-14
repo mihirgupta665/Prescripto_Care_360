@@ -100,7 +100,7 @@ export const doctors = [
             line2: 'Circle, Ring Road, London'
         }
     },
-    { 
+    {
         _id: 'doc2',
         name: 'Dr. Emily Larson',
         image: doc2,
