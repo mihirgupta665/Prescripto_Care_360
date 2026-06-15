@@ -5,8 +5,8 @@ import { assets } from "../assets/assets"
 
 const Appointment = () => {
 
-    const {docId} = useParams()
-    const {doctors, currencySymbol} = useContext(AppContext)
+    const { docId } = useParams()
+    const { doctors, currencySymbol } = useContext(AppContext)
     const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
     const [docInfo, setDocInfo] = useState(null)
@@ -16,42 +16,45 @@ const Appointment = () => {
 
 
     const fetchDocInfo = async () => {
-        const docInfo = doctors.find(doc => doc._id===docId)
+        const docInfo = doctors.find(doc => doc._id === docId)
         setDocInfo(docInfo)
         // console.log(docInfo)
     }
 
     const getAvailableSlots = async () => {
         setDocSlots([])
-        console.log("Date right Now with time : ",new Date())
+        console.log("Date right Now with time : ", new Date())
 
         // getting current date
         let today = new Date()
-        for(let i=0; i<7; i++){
+        for (let i = 0; i < 7; i++) {
             // getting future dates
             // today is reference now so need to make copy of today or else chanegs will be reflected in both references.
             let currentDate = new Date(today)  // currentDate = Mon Jun 16 2026 15: 54:00 GMT +0530
-            currentDate.setDate(today.getDate() + i)  
+            currentDate.setDate(today.getDate() + i)
 
             // setting end time of the date with index
             let endTime = new Date()  // could we here write =>  let endtime = new Date(today) as new Date() generates same right?
-            endTime.setDate(today.getDate() + i)  
-            endTime.setHours(21,0,0,0)  // what does this line do mean and what is 21,0,0,0 each
-            console.log("Current Day 1",currentDate) //
+            endTime.setDate(today.getDate() + i)
+            endTime.setHours(21, 0, 0, 0)  // what does this line do mean and what is 21,0,0,0 each
+            // console.log("Current Day 1",currentDate) 
             // setting hours
-            if(today.getDate() === currentDate.getDate()){
-                currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10)
-                currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)  
+            if (today.getDate() === currentDate.getDate()) {
+                currentDate.setHours(currentDate.getHours() >= 10 ? currentDate.getHours() + 1 : 10)
+                currentDate.setMinutes(currentDate.getMinutes() >= 30 ? 30 : 0)
+                if(currentDate.getHours() === 10 && currentDate.getMinutes >= 30){
+                    currentDate.setMinutes(0)
+                }
             }
-            else{
+            else {
                 currentDate.setHours(10)
                 currentDate.setMinutes(0)
             }
-            
-            console.log("Current Day 2",currentDate) //
+
+            // console.log("Current Day 2",currentDate) 
             let timeSlots = []
-            while(currentDate < endTime){   
-                let formattedTime =  currentDate.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) // explain this line with outputs
+            while (currentDate < endTime) {
+                let formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) // explain this line with outputs
 
                 // add slots to array
                 timeSlots.push({
@@ -64,19 +67,19 @@ const Appointment = () => {
 
             }
 
-            setDocSlots( prev => ([...prev, timeSlots ]))
+            setDocSlots(prev => ([...prev, timeSlots]))
 
         }
 
     }
 
-    useEffect( () => {
+    useEffect(() => {
         fetchDocInfo()
-    }, [doctors, docId] )
+    }, [doctors, docId])
 
-    useEffect( () => {
+    useEffect(() => {
         getAvailableSlots()
-    }, [docInfo] )
+    }, [docInfo])
 
     useEffect(() => {
         console.log(docSlots);
@@ -94,8 +97,8 @@ const Appointment = () => {
                 <div className="flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0">
                     {/*------- Doctor Info : name degree experience -------*/}
                     <p className="flex items-center gap-2 text-2xl font-medium text-gray-900">
-                        {docInfo.name} 
-                        <img className="w-5" src={assets.verified_icon} alt="" /> 
+                        {docInfo.name}
+                        <img className="w-5" src={assets.verified_icon} alt="" />
                     </p>
                     <div className="flex items-center gap-2 text-sm mt-2 text-gray-700">
                         <p>{docInfo.degree} - {docInfo.speciality}</p>
@@ -107,15 +110,38 @@ const Appointment = () => {
                         <p className="text-sm text-gray-600 max-w-[700px] mt-1">{docInfo.about}</p>
                     </div>
                     <p className="text-gray-500 font-medium mt-4">
-                        Appointment Fee: 
+                        Appointment Fee:
                         <span className="text-gray-600"> {currencySymbol}{docInfo.fees}</span>
                     </p>
                 </div>
             </div>
 
             {/* ----- Booking Slots ----- */}
-            <div className="sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700"></div>
-            <p>Booking Slots</p>
+            <div className="sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700">
+
+                <p>Booking Slots</p>
+                {/* ---- Date Slots ---- */}
+                <div className="flex gap-3 items-center w-full overflow-x-scroll mt-4">
+                    {
+                        docSlots.length && docSlots.map((item, index) => (
+                            <div onClick={() => setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? "bg-primary text-white" : "border border-gray-200"}`} key={index}>
+                                {/* {console.log("day", item)}  entire day */}
+                                <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
+                                <p>{item[0] && item[0].datetime.getDate()}</p>
+                            </div>
+                        ))
+                    }
+                </div>
+                {/* ---- Time Slots Day Wise ---- */}
+                <div className="flex items-center gap-3 w-full overflow-x-scroll mt-4">
+                    { docSlots.length && docSlots[slotIndex].map((item, index) => (
+                        <p onClick={() => setSlotTime(item.time)} className={`text-m font-heavy flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? "bg-primary text-white" : "text-gray-400 border border-gray-500"}`} key={index}>
+                            {item.time.toLowerCase()}
+                        </p>
+                    ))}
+                </div>
+                <button className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6">Book An Appointment</button>
+            </div>
         </div>
     )
 }
