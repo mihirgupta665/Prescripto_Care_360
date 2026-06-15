@@ -7,6 +7,7 @@ const Appointment = () => {
 
     const {docId} = useParams()
     const {doctors, currencySymbol} = useContext(AppContext)
+    const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
     const [docInfo, setDocInfo] = useState(null)
     const [docSlots, setDocSlots] = useState([])
@@ -22,15 +23,49 @@ const Appointment = () => {
 
     const getAvailableSlots = async () => {
         setDocSlots([])
+        console.log("Date right Now with time : ",new Date())
 
         // getting current date
         let today = new Date()
         for(let i=0; i<7; i++){
             // getting future dates
-            let currentDate = new Date(today)  // what is actual value in today and all changing value in currentDate could not we write directly write currentDate = today+i
-            currentDate.setDate(today.getDate() + i)  // what is the value of today and today.getDate()
+            // today is reference now so need to make copy of today or else chanegs will be reflected in both references.
+            let currentDate = new Date(today)  // currentDate = Mon Jun 16 2026 15: 54:00 GMT +0530
+            currentDate.setDate(today.getDate() + i)  
 
             // setting end time of the date with index
+            let endTime = new Date()  // could we here write =>  let endtime = new Date(today) as new Date() generates same right?
+            endTime.setDate(today.getDate() + i)  
+            endTime.setHours(21,0,0,0)  // what does this line do mean and what is 21,0,0,0 each
+            console.log("Current Day 1",currentDate) //
+            // setting hours
+            if(today.getDate() === currentDate.getDate()){
+                currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10)
+                currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)  
+            }
+            else{
+                currentDate.setHours(10)
+                currentDate.setMinutes(0)
+            }
+            
+            console.log("Current Day 2",currentDate) //
+            let timeSlots = []
+            while(currentDate < endTime){   
+                let formattedTime =  currentDate.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) // explain this line with outputs
+
+                // add slots to array
+                timeSlots.push({
+                    datetime: new Date(currentDate),
+                    time: formattedTime
+                })
+
+                // Increment time by 30 minutes
+                currentDate.setMinutes(currentDate.getMinutes() + 30)
+
+            }
+
+            setDocSlots( prev => ([...prev, timeSlots ]))
+
         }
 
     }
@@ -42,6 +77,10 @@ const Appointment = () => {
     useEffect( () => {
         getAvailableSlots()
     }, [docInfo] )
+
+    useEffect(() => {
+        console.log(docSlots);
+    }, [docSlots])
 
     return docInfo && (
         <div>
@@ -74,6 +113,9 @@ const Appointment = () => {
                 </div>
             </div>
 
+            {/* ----- Booking Slots ----- */}
+            <div className="sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700"></div>
+            <p>Booking Slots</p>
         </div>
     )
 }
