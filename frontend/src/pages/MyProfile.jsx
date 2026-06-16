@@ -39,7 +39,7 @@ const MyProfile = () => {
                     <p className="font-medium">Phone: </p>
                     {
                         isEdit
-                            ? <input className="bg-gray-100 max-w-52" type="text" value={userData.phone} onChange={e => setUserData(prev => ({ ...prev, phone: e.target.value }))} />
+                            ? <input className="bg-gray-100 max-w-44" type="text" value={userData.phone} onChange={e => setUserData(prev => ({ ...prev, phone: e.target.value }))} />
                             : <p className="text-gray-500">{userData.phone}</p>
                     }
 
@@ -60,31 +60,31 @@ const MyProfile = () => {
                 </div>
             </div>
             <div>
-                <p>Basic Information</p>
-                <div>
-                    <p>Gender : </p>
+                <p className="text-neutral-500 underline mt-3">BASIC INFORMATION</p>
+                <div className="grid grid-cols-[1fr_3fr] gap-y-2.5 mt-3 text-neutral-700">
+                    <p className="font-medium">Gender : </p>
                     {
                         isEdit
-                            ? <select value={userData.gender} onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}>
+                            ? <select className="max-w-20 bg-gray-100" value={userData.gender} onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))}>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
-                            : <p>{userData.gender}</p>
+                            : <p className="text-gray-500">{userData.gender}</p>
                     }
-                    <p>Birthday : </p>
+                    <p className="font-medium">Birthday : </p>
                     {
                         isEdit
-                            ? <input type="date" value={userData.dob} onChange={e => setUserData(prev => ({...prev, dob: e.target.value }))} />
-                            : <p>{userData.dob}</p>
+                            ? <input className="max-w-28 bg-gray-100" type="date" value={userData.dob} onChange={e => setUserData(prev => ({...prev, dob: e.target.value }))} />
+                            : <p className="text-gray-500">{userData.dob}</p>
                     }
                 </div>
             </div>
 
-            <div>
+            <div className="mt-8">
                 {
                     isEdit
-                    ? <button onClick={() => setIsEdit(false)}>Save Information</button>
-                    : <button onClick={() => setIsEdit(true)}>Edit Information</button>
+                        ? <button className="border border-primary px-8 py-2 rounded-full hover:bg-primary hover:text-white transition-all duration-500" onClick={() => setIsEdit(false)}>Save Information</button>
+                        : <button className="border border-primary px-8 py-2 rounded-full hover:bg-primary hover:text-white transition-all duration-500" onClick={() => setIsEdit(true)}>Edit Information</button>
                 }
             </div>
 
