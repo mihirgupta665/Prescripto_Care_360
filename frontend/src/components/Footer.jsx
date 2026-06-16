@@ -36,7 +36,11 @@ const Footer = () => {
             {/* CopyRight Declaration */}
             <div>
                 <hr />
-                <p className="py-5 text-lg text-center">Copyright 2026&copy; | Prescripto 360 Care | All Rights Reserved</p>
+                <div className="flex-col sm:flex sm:flex-row gap-2 justify-center">
+                    <p className=" text-lg text-center">Copyright 2026&copy; |</p>
+                    <p className="text-lg text-center">Prescripto 360 Care |</p>
+                    <p className=" text-lg text-center">{ } All Rights Reserved</p>
+                </div>
             </div>
         </div>
     )
