@@ -10,10 +10,18 @@ const port = process.env.PORT || 4000
 // middlewares
 app.use(express.json())
 app.use(cors())
+app.disable("etag")
+app.use((req, res, next) => {
+    res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate")
+    res.set("Pragma", "no-cache")
+    res.set("Expires", "0")
+    next()
+})
 
 // api endpoints 
 app.get("/", (req, res) => {
-    res.send("Application's API Working")
+    console.log("route hit")
+    res.send("Application's API Working!!!")
 })
 
 app.listen(port, () => console.log("Server Started at PORT :", port))
