@@ -17,4 +17,4 @@ const AppContextProvider = (props) => {
 
 }
 
-export default AppContextProvidervv
+export default AppContextProvider
