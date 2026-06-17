@@ -13,17 +13,17 @@ const addDoctor = async (req, res) => {
         // console.log({ name, email, password, speciality, degree, experience, about, fees, address }, imageFile)
 
         // checking for all data to add doctors
-        if(!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address || !imageFile){
-            return res.json({success:false, message:"Missing Details"})
+        if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address || !imageFile) {
+            return res.json({ success: false, message: "Missing Details" })
         }
 
         // validating email format
-        if(!validator.isEmail(email)){
-            return res.json({success:false, message:"Please Enter a Valid Email"})
+        if (!validator.isEmail(email)) {
+            return res.json({ success: false, message: "Please Enter a Valid Email" })
         }
 
         // validating password strength on the basis of it's length
-        if(password.length < 8){
+        if (password.length < 8) {
             return res.json({ success: false, message: "Please Enter a Strong Password" })
         }
 
@@ -34,58 +34,58 @@ const addDoctor = async (req, res) => {
         // upload image to cloudinary
         const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" })
         const imageUrl = imageUpload.secure_url
-        
+
         const doctorData = {
             name,
             email,
-            image : imageUrl,
-            password : hashedPassword,
+            image: imageUrl,
+            password: hashedPassword,
             speciality,
             degree,
             experience,
             about,
             fees,
-            address : JSON.parse(address),
-            date : Date.now()
+            address: JSON.parse(address),
+            date: Date.now()
         }
-        
+
         // document creation for the new doctor data
         const newDoctor = new doctorModel(doctorData)
         await newDoctor.save()
 
-        res.json({success:true, message:"Doctor Added Successfully"})
-        
+        res.json({ success: true, message: "Doctor Added Successfully" })
+
     }
     catch (error) {
         console.log("Eror Occured", error)
         if (error.http_code === 401 || error.http_code === 403) {
-            return res.json({success:false, message:"Cloudinary credentials are invalid or upload access is denied"})
+            return res.json({ success: false, message: "Cloudinary credentials are invalid or upload access is denied" })
         }
-        res.json({success:false, message:error.message})
+        res.json({ success: false, message: error.message })
     }
 }
 
 //API for the Admin Login
 const loginAdmin = async (req, res) => {
-    try{
+    try {
 
-        const {email, password} = req.body
+        const { email, password } = req.body
 
-        if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){
-            const token = jwt.sign(email+password, process.env.JWT_SECRET)
-            res.json({success:true, token})
-        } 
-        else{
-            res.json({success:false, message:"Invalid Credentials"})
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign(email + password, process.env.JWT_SECRET)
+            res.json({ success: true, token })
+        }
+        else {
+            res.json({ success: false, message: "Invalid Credentials" })
         }
 
-    } 
-    catch (error){
+    }
+    catch (error) {
         console.log("Eror Occured", error)
         res.json({ success: false, message: error.message })
     }
 
 }
 
-export default addDoctor 
-export {loginAdmin}
+export default addDoctor
+export { loginAdmin }
