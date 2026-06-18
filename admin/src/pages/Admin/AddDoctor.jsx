@@ -1,9 +1,11 @@
 import React from 'react'
 
 const AddDoctor = () => {
-  return (
-    <div>AddDoctor</div>
-  )
+    return (
+        <form>
+            
+        </form>
+    )
 }
 
 export default AddDoctor
