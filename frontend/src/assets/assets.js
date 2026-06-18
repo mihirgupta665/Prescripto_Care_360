@@ -90,210 +90,225 @@ export const doctors = [
         _id: 'doc1',
         name: 'Dr. Richard James',
         image: doc1,
-        speciality: 'General physician',
-        degree: 'MBBS',
-        experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        speciality: 'General Physician',
+        degree: 'MBBS, MD',
+        experience: '8 Years',
+        about: 'Experienced General Physician focused on preventive care, chronic disease management, and long-term patient wellness.',
+        fees: 55,
         address: {
-            line1: '17th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '221 Baker Street',
+            line2: 'Marylebone, London'
         }
     },
+
     {
         _id: 'doc2',
         name: 'Dr. Emily Larson',
         image: doc2,
         speciality: 'Gynecologist',
-        degree: 'MBBS',
-        experience: '3 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 60,
+        degree: 'MBBS, MS',
+        experience: '6 Years',
+        about: 'Dedicated to women’s healthcare, pregnancy support, reproductive health, and routine gynecological care.',
+        fees: 65,
         address: {
-            line1: '27th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '14 Queen Victoria Road',
+            line2: 'Kensington, London'
         }
     },
+
     {
         _id: 'doc3',
         name: 'Dr. Sarah Patel',
         image: doc3,
         speciality: 'Dermatologist',
-        degree: 'MBBS',
-        experience: '1 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 30,
+        degree: 'MBBS, MD Dermatology',
+        experience: '5 Years',
+        about: 'Specializes in acne treatment, skin allergies, eczema management, and cosmetic dermatology procedures.',
+        fees: 45,
         address: {
-            line1: '37th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '88 Notting Hill Gate',
+            line2: 'Notting Hill, London'
         }
     },
+
     {
         _id: 'doc4',
         name: 'Dr. Christopher Lee',
         image: doc4,
         speciality: 'Pediatricians',
-        degree: 'MBBS',
-        experience: '2 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 40,
+        degree: 'MBBS, MD Pediatrics',
+        experience: '7 Years',
+        about: 'Provides comprehensive healthcare for children, including vaccinations, developmental assessments, and nutrition guidance.',
+        fees: 50,
         address: {
-            line1: '47th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '35 Camden High Street',
+            line2: 'Camden Town, London'
         }
     },
+
     {
         _id: 'doc5',
         name: 'Dr. Jennifer Garcia',
         image: doc5,
         speciality: 'Neurologist',
-        degree: 'MBBS',
-        experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        degree: 'MBBS, DM Neurology',
+        experience: '12 Years',
+        about: 'Experienced Neurologist treating migraines, epilepsy, stroke recovery cases, and nervous system disorders.',
+        fees: 70,
         address: {
-            line1: '57th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '72 King William Street',
+            line2: 'City of London'
         }
     },
+
     {
         _id: 'doc6',
         name: 'Dr. Andrew Williams',
         image: doc6,
         speciality: 'Neurologist',
-        degree: 'MBBS',
-        experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        degree: 'MBBS, DM Neurology',
+        experience: '10 Years',
+        about: 'Focused on advanced neurological diagnostics and personalized treatment plans for complex neurological conditions.',
+        fees: 68,
         address: {
-            line1: '57th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '24 Bishopsgate',
+            line2: 'Canary Wharf, London'
         }
     },
+
     {
         _id: 'doc7',
         name: 'Dr. Christopher Davis',
         image: doc7,
-        speciality: 'General physician',
+        speciality: 'General Physician',
         degree: 'MBBS',
         experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        about: 'Passionate about primary healthcare, preventive screenings, and helping patients maintain healthy lifestyles.',
+        fees: 40,
         address: {
-            line1: '17th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '57 Oxford Street',
+            line2: 'Westminster, London'
         }
     },
+
     {
         _id: 'doc8',
         name: 'Dr. Timothy White',
         image: doc8,
         speciality: 'Gynecologist',
-        degree: 'MBBS',
-        experience: '3 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 60,
+        degree: 'MBBS, DGO',
+        experience: '5 Years',
+        about: 'Provides compassionate care for women, focusing on reproductive health, fertility counseling, and prenatal services.',
+        fees: 58,
         address: {
-            line1: '27th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '92 Sloane Street',
+            line2: 'Chelsea, London'
         }
     },
+
     {
         _id: 'doc9',
         name: 'Dr. Ava Mitchell',
         image: doc9,
         speciality: 'Dermatologist',
-        degree: 'MBBS',
-        experience: '1 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 30,
+        degree: 'MBBS, MD Dermatology',
+        experience: '3 Years',
+        about: 'Treats skin disorders, pigmentation concerns, hair loss conditions, and cosmetic skin issues.',
+        fees: 35,
         address: {
-            line1: '37th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '11 Portobello Road',
+            line2: 'Notting Hill, London'
         }
     },
+
     {
         _id: 'doc10',
         name: 'Dr. Jeffrey King',
         image: doc10,
         speciality: 'Pediatricians',
-        degree: 'MBBS',
-        experience: '2 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 40,
+        degree: 'MBBS, DCH',
+        experience: '6 Years',
+        about: 'Dedicated Pediatrician committed to ensuring healthy growth, development, and wellbeing for children.',
+        fees: 48,
         address: {
-            line1: '47th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '41 Abbey Road',
+            line2: 'St John’s Wood, London'
         }
     },
+
     {
         _id: 'doc11',
         name: 'Dr. Zoe Kelly',
         image: doc11,
         speciality: 'Gastroenterologist',
-        degree: 'MBBS',
-        experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        degree: 'MBBS, DM Gastroenterology',
+        experience: '11 Years',
+        about: 'Specializes in digestive health, liver diseases, gastrointestinal disorders, and endoscopic procedures.',
+        fees: 67,
         address: {
-            line1: '57th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '67 Fleet Street',
+            line2: 'Southwark, London'
         }
     },
+
     {
         _id: 'doc12',
         name: 'Dr. Patrick Harris',
         image: doc12,
         speciality: 'Neurologist',
-        degree: 'MBBS',
-        experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        degree: 'MBBS, DM Neurology',
+        experience: '9 Years',
+        about: 'Offers expert care for neurological conditions with a focus on patient education and long-term recovery.',
+        fees: 62,
         address: {
-            line1: '57th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '18 Tower Bridge Road',
+            line2: 'Bermondsey, London'
         }
     },
+
     {
         _id: 'doc13',
         name: 'Dr. Chloe Evans',
         image: doc13,
-        speciality: 'General physician',
-        degree: 'MBBS',
-        experience: '4 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 50,
+        speciality: 'General Physician',
+        degree: 'MBBS, MD',
+        experience: '7 Years',
+        about: 'Committed to evidence-based medicine and helping patients achieve better overall health through preventive care.',
+        fees: 52,
         address: {
-            line1: '17th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '103 Regent Street',
+            line2: 'Soho, London'
         }
     },
+
     {
         _id: 'doc14',
         name: 'Dr. Ryan Martinez',
         image: doc14,
         speciality: 'Gynecologist',
-        degree: 'MBBS',
-        experience: '3 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 60,
+        degree: 'MBBS, MS',
+        experience: '8 Years',
+        about: 'Experienced in pregnancy care, women’s wellness, minimally invasive procedures, and reproductive health management.',
+        fees: 63,
         address: {
-            line1: '27th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '29 Piccadilly Circus',
+            line2: 'Mayfair, London'
         }
     },
+
     {
         _id: 'doc15',
         name: 'Dr. Amelia Hill',
         image: doc15,
         speciality: 'Dermatologist',
-        degree: 'MBBS',
-        experience: '1 Years',
-        about: 'Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.',
-        fees: 30,
+        degree: 'MBBS, MD Dermatology',
+        experience: '4 Years',
+        about: 'Provides personalized skincare treatments and specializes in acne, eczema, and skin rejuvenation therapies.',
+        fees: 38,
         address: {
-            line1: '37th Cross, Richmond',
-            line2: 'Circle, Ring Road, London'
+            line1: '76 Brick Lane',
+            line2: 'Shoreditch, London'
         }
-    },
+    }
+
 ]
