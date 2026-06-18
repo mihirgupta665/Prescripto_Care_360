@@ -6,6 +6,7 @@ import connectDB from "./config/mongodb.js"
 import connectCloudinary from "./config/cloudinary.js"
 
 import adminRouter from "./routes/adminRoute.js"
+import doctorRouter from "./routes/doctorRoute.js"
 
 
 // app config
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 
 // localhost:4000/api/admin/add-doctors
 app.use("/api/admin", adminRouter)
+app.use("/api/doctor", doctorRouter)
 
 app.get("/", (req, res) => {
     console.log("route hit")
