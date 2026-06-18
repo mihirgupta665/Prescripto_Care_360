@@ -47,9 +47,30 @@ const AddDoctor = () => {
                 console.log(`${key} : ${value}`);
             })
 
+            const {data} = await axios.post(backendUrl + "/api/admin/add-doctor", formData, { headers : { atoken: aToken } })
+
+            if(data.success) {
+                toast.success(data.message)
+                setDocImg(false)
+                setName("")
+                setPassword("")
+                setEmail("")
+                setAddress1("")
+                setAddress2("")
+                setDegree("")
+                setAbout("")
+                setFees("")
+                setExperience("")
+                setSpeciality("")
+            }
+            else {
+                toast.error(data.message)
+            }
+
         }
         catch(error){
-
+            toast.error(error.message)
+            console.log("error Occured while hitting the add-doctor end point", error)
         }
     }  
 
@@ -59,7 +80,7 @@ const AddDoctor = () => {
 
             <p className='mb-3 text-lg font-meidum'>Add Doctor</p>
 
-            <div  className='bg-white pt-3 pb-8 px-8 border rounded w-full max-w-4xl max-h-[80vh] overflow-y-scroll'>
+            <div  className='bg-white pt-3 pb-8 px-8 border rounded w-full max-w-4xl max-h-[82vh] overflow-y-scroll'>
                 <div className='flex items-center gap-4 mb-8 text-gray-500'>
                     <label htmlFor="doc-img">
                         <img className=' ml-[0px] mt-[20px] w-48 rounded-full bg-gray-100 cursor-pointer' src={docImg ? URL.createObjectURL(docImg) :assets.upload_area} alt="" />

@@ -8,6 +8,7 @@ import jwt from "jsonwebtoken"
 const addDoctor = async (req, res) => {
 
     try {
+        console.log("Add Doctor route hit")
         const { name, email, password, speciality, degree, experience, about, fees, address } = req.body
         const imageFile = req.file
         // console.log({ name, email, password, speciality, degree, experience, about, fees, address }, imageFile)
