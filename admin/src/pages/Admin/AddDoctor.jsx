@@ -1,18 +1,54 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { assets } from '../../assets/assets'
+import axios from "axios"
+import { AdminContext } from '../../context/AdminContext'
+import {toast} from "react-toastify"
 
 const AddDoctor = () => {
+
+    const [docImg, setDocImg] = useState(false)
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [experience, setExperience] = useState("")
+    const [fees, setFees] = useState("")
+    const [about, setAbout] = useState("")
+    const [speciality, setSpeciality] = useState("")
+    const [degree, setDegree] = useState("")
+    const [address1, setAddress1] = useState("")
+    const [address2, setAddress2] = useState("")
+
+    const {aToken, backendUrl} = useContext(AdminContext)
+
+    const onSubmitHandler = async (event) => {
+        event.preventDefault()
+
+        try{
+
+            if(!docImg){
+                return toast.error("Doctor Image Not Uploaded")
+            }
+
+            const formData = new FormData()
+
+        }
+        catch(error){
+
+        }
+    }  
+
+
     return (
-        <form className='m-5 w-full'>
+        <form onSubmit={onSubmitHandler} className='m-5 w-full'>
 
             <p className='mb-3 text-lg font-meidum'>Add Doctor</p>
 
             <div  className='bg-white pt-3 pb-8 px-8 border rounded w-full max-w-4xl max-h-[80vh] overflow-y-scroll'>
                 <div className='flex items-center gap-4 mb-8 text-gray-500'>
                     <label htmlFor="doc-img">
-                        <img className='ml-[-20px] w-48 rounded-full bg-gray-100 cursor-pointer' src={assets.upload_area} alt="" />
+                        <img className=' ml-[0px] mt-[20px] w-48 rounded-full bg-gray-100 cursor-pointer' src={docImg ? URL.createObjectURL(docImg) :assets.upload_area} alt="" />
                     </label>
-                    <input type="file" id="doc-img" hidden />
+                    <input onChange={(e) => setDocImg(e.target.files[0]) } type="file" id="doc-img" hidden />
                     <p>Upload doctor <br /> picture</p>
                 </div>
 
@@ -21,20 +57,21 @@ const AddDoctor = () => {
 
                         <div className='flex-1 flex flex-col gap-1'>
                             <p>Doctor Name : </p>
-                            <input className='border rounded px-3 py-2' type="text" placeholder='Enter Name' required />
+                            <input value={name} onChange={(e) => setName(e.target.value)} className='border rounded px-3 py-2' type="text" placeholder='Enter Name' required />
                         </div>
                         <div className='flex-1 flex flex-col gap-1'>
                             <p>Doctor Email : </p>
-                            <input className='border rounded px-3 py-2' type="email" placeholder='Enter Email' required />
+                            <input value={email} onChange={(e) => setEmail(e.target.value)} className='border rounded px-3 py-2' type="email" placeholder='Enter Email' required />
                         </div>
                         <div className='flex-1 flex flex-col gap-1'>
                             <p>Doctor Password : </p>
-                            <input className='border rounded px-3 py-2' type="password" placeholder='Enter Password' required />
+                            <input value={password} onChange={(e) => setPassword(e.target.value)} className='border rounded px-3 py-2' type="password" placeholder='Enter Password' required />
                         </div>
 
                         <div className='flex-1 flex flex-col gap-1'>
                             <p>Doctor Experience : </p>
-                            <select className='border rounded px-3 py-2' name="" id="">
+                            <select value={experience} onChange={(e) => setExperience(e.target.value)} className='border rounded px-3 py-2' name="" id="" required>
+                                <option value="" disabled>---- Select Experience ----</option>
                                 <option value="1 Year">1 Year</option>
                                 <option value="2 Year">2 Year</option>
                                 <option value="3 Year">3 Year</option>
@@ -51,7 +88,7 @@ const AddDoctor = () => {
 
                         <div className='flex-1 flex flex-col gap-1'>
                             <p>Doctor Fees : </p>
-                            <input className='border rounded px-3 py-2' type="number" placeholder='Enter Fees' required />
+                            <input value={fees} onChange={(e) => setFees(e.target.value)} className='border rounded px-3 py-2' type="number" placeholder='Enter Fees' required />
                         </div>
 
                     </div>
@@ -60,7 +97,8 @@ const AddDoctor = () => {
 
                         <div className='flex-1 flex flex-col gap-1'>
                             <p>Doctor Speciality</p>
-                            <select className='border rounded px-3 py-2' name="" id="">
+                            <select value={speciality} onChange={(e) => setSpeciality(e.target.value)} className='border rounded px-3 py-2' name="" id="" required>
+                                <option value="" disabled>---- Select Speciality ----</option>
                                 <option value="General Physician">General Physician</option>
                                 <option value="Gynecologist">Gynecologist</option>
                                 <option value="Dermatologist">Dermatologist</option>
@@ -72,13 +110,13 @@ const AddDoctor = () => {
 
                         <div className='flex-1 flex flex-col gap-1'>
                             <p>Doctor Education : </p>
-                            <input className='border rounded px-3 py-2' type="text" placeholder='Enter Education' required />
+                            <input value={degree} onChange={(e) => setDegree(e.target.value)} className='border rounded px-3 py-2' type="text" placeholder='Enter Education' required />
                         </div>
 
                         <div className='flex-1 flex flex-col gap-1'>
                             <p>Doctor Address</p>
-                            <input className='border rounded px-3 py-2' type="text" placeholder='address line 1' required />
-                            <input className='border rounded px-3 py-2' type="text" placeholder='address line 2' required />
+                            <input value={address1} onChange={(e) => setAddress1(e.target.value)} className='border rounded px-3 py-2' type="text" placeholder='address line 1' required />
+                            <input value={address2} onChange={(e) => setAddress2(e.target.value)} className='border rounded px-3 py-2' type="text" placeholder='address line 2' required />
                         </div>
 
                     </div>
@@ -86,10 +124,10 @@ const AddDoctor = () => {
 
                 <div>
                     <p className='mt-4 mb-2'>About Doctor : </p>
-                    <textarea className='w-full px-4 pt-2 border rounded' placeholder='Write About the Doctor...' rows={5} required />
+                    <textarea value={about} onChange={(e) => setAbout(e.target.value)} className='w-full px-4 pt-2 border rounded' placeholder='Write About the Doctor...' rows={5} required />
                 </div>
 
-                <button className='bg-primary px-10 py-3 mt-4 text-white rounded-full'>Add Doctor</button>
+                <button type="submit" className='bg-primary px-10 py-3 mt-4 text-white rounded-full'>Add Doctor</button>
 
             </div>
 
