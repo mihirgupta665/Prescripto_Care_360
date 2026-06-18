@@ -93,14 +93,13 @@ export const doctors = [
         speciality: 'General Physician',
         degree: 'MBBS, MD',
         experience: '8 Years',
-        about: 'Experienced General Physician focused on preventive care, chronic disease management, and long-term patient wellness.',
+        about: 'Dr. Richard James is an experienced General Physician dedicated to preventive healthcare and effective treatment plans. He focuses on diagnosing common illnesses, managing chronic conditions, and promoting healthy lifestyles. His patient-first approach and commitment to modern medical practices have earned him a reputation for delivering reliable and compassionate care.',
         fees: 55,
         address: {
             line1: '221 Baker Street',
             line2: 'Marylebone, London'
         }
     },
-
     {
         _id: 'doc2',
         name: 'Dr. Emily Larson',
@@ -108,14 +107,13 @@ export const doctors = [
         speciality: 'Gynecologist',
         degree: 'MBBS, MS',
         experience: '6 Years',
-        about: 'Dedicated to women’s healthcare, pregnancy support, reproductive health, and routine gynecological care.',
+        about: 'Dr. Emily Larson specializes in women’s healthcare, reproductive wellness, and prenatal care. She provides personalized treatment plans and supports patients through every stage of life. Her compassionate nature and strong clinical expertise help create a comfortable environment where patients can confidently discuss and manage their health concerns.',
         fees: 65,
         address: {
             line1: '14 Queen Victoria Road',
             line2: 'Kensington, London'
         }
     },
-
     {
         _id: 'doc3',
         name: 'Dr. Sarah Patel',
@@ -123,14 +121,13 @@ export const doctors = [
         speciality: 'Dermatologist',
         degree: 'MBBS, MD Dermatology',
         experience: '5 Years',
-        about: 'Specializes in acne treatment, skin allergies, eczema management, and cosmetic dermatology procedures.',
+        about: 'Dr. Sarah Patel is passionate about treating skin disorders and helping patients achieve healthy skin. She specializes in acne treatment, eczema management, skin rejuvenation, and cosmetic dermatology. By combining advanced treatments with individualized care, she ensures effective results and improved confidence for her patients.',
         fees: 45,
         address: {
             line1: '88 Notting Hill Gate',
             line2: 'Notting Hill, London'
         }
     },
-
     {
         _id: 'doc4',
         name: 'Dr. Christopher Lee',
@@ -138,14 +135,13 @@ export const doctors = [
         speciality: 'Pediatricians',
         degree: 'MBBS, MD Pediatrics',
         experience: '7 Years',
-        about: 'Provides comprehensive healthcare for children, including vaccinations, developmental assessments, and nutrition guidance.',
+        about: 'Dr. Christopher Lee provides comprehensive healthcare services for infants, children, and adolescents. His expertise includes routine checkups, vaccinations, growth monitoring, and developmental assessments. He believes in building trust with both children and parents while ensuring every child receives the highest standard of medical care.',
         fees: 50,
         address: {
             line1: '35 Camden High Street',
             line2: 'Camden Town, London'
         }
     },
-
     {
         _id: 'doc5',
         name: 'Dr. Jennifer Garcia',
@@ -153,14 +149,13 @@ export const doctors = [
         speciality: 'Neurologist',
         degree: 'MBBS, DM Neurology',
         experience: '12 Years',
-        about: 'Experienced Neurologist treating migraines, epilepsy, stroke recovery cases, and nervous system disorders.',
+        about: 'Dr. Jennifer Garcia is a highly experienced Neurologist specializing in disorders affecting the brain and nervous system. She has extensive expertise in treating migraines, epilepsy, stroke-related conditions, and neurological disorders. Her commitment to accurate diagnosis and personalized care helps patients achieve improved neurological health and quality of life.',
         fees: 70,
         address: {
             line1: '72 King William Street',
             line2: 'City of London'
         }
     },
-
     {
         _id: 'doc6',
         name: 'Dr. Andrew Williams',
@@ -168,29 +163,27 @@ export const doctors = [
         speciality: 'Neurologist',
         degree: 'MBBS, DM Neurology',
         experience: '10 Years',
-        about: 'Focused on advanced neurological diagnostics and personalized treatment plans for complex neurological conditions.',
+        about: 'Dr. Andrew Williams focuses on diagnosing and treating complex neurological conditions. He works closely with patients to develop tailored treatment strategies that improve long-term outcomes. His expertise, combined with a patient-centered approach, enables him to deliver comprehensive neurological care using the latest advancements in medicine.',
         fees: 68,
         address: {
             line1: '24 Bishopsgate',
             line2: 'Canary Wharf, London'
         }
     },
-
     {
         _id: 'doc7',
-        name: 'Dr. Christopher Davis',
+        name: 'Dr. Olivia Brown',
         image: doc7,
         speciality: 'General Physician',
         degree: 'MBBS',
         experience: '4 Years',
-        about: 'Passionate about primary healthcare, preventive screenings, and helping patients maintain healthy lifestyles.',
+        about: 'Dr. Olivia Brown is committed to providing high-quality primary healthcare services. She specializes in preventive medicine, routine health screenings, and the management of common medical conditions. Her friendly approach and dedication to patient education help individuals make informed decisions about their overall health and wellness.',
         fees: 40,
         address: {
             line1: '57 Oxford Street',
             line2: 'Westminster, London'
         }
     },
-
     {
         _id: 'doc8',
         name: 'Dr. Timothy White',
@@ -198,14 +191,13 @@ export const doctors = [
         speciality: 'Gynecologist',
         degree: 'MBBS, DGO',
         experience: '5 Years',
-        about: 'Provides compassionate care for women, focusing on reproductive health, fertility counseling, and prenatal services.',
+        about: 'Dr. Timothy White provides expert gynecological care with a focus on women’s health, fertility guidance, and pregnancy support. He is dedicated to creating a supportive environment where patients feel comfortable discussing sensitive health concerns. His goal is to deliver safe, effective, and personalized medical care.',
         fees: 58,
         address: {
             line1: '92 Sloane Street',
             line2: 'Chelsea, London'
         }
     },
-
     {
         _id: 'doc9',
         name: 'Dr. Ava Mitchell',
@@ -213,14 +205,13 @@ export const doctors = [
         speciality: 'Dermatologist',
         degree: 'MBBS, MD Dermatology',
         experience: '3 Years',
-        about: 'Treats skin disorders, pigmentation concerns, hair loss conditions, and cosmetic skin issues.',
+        about: 'Dr. Ava Mitchell specializes in diagnosing and treating a wide range of skin conditions, including acne, pigmentation issues, and allergies. She believes in combining medical expertise with patient education to achieve lasting results. Her modern treatment methods ensure patients receive effective and personalized dermatological care.',
         fees: 35,
         address: {
             line1: '11 Portobello Road',
             line2: 'Notting Hill, London'
         }
     },
-
     {
         _id: 'doc10',
         name: 'Dr. Jeffrey King',
@@ -228,14 +219,13 @@ export const doctors = [
         speciality: 'Pediatricians',
         degree: 'MBBS, DCH',
         experience: '6 Years',
-        about: 'Dedicated Pediatrician committed to ensuring healthy growth, development, and wellbeing for children.',
+        about: 'Dr. Jeffrey King is dedicated to promoting healthy growth and development in children. He provides preventive care, nutritional guidance, vaccinations, and treatment for common childhood illnesses. His warm and approachable personality helps children feel comfortable during medical visits while ensuring excellent healthcare outcomes.',
         fees: 48,
         address: {
             line1: '41 Abbey Road',
             line2: 'St John’s Wood, London'
         }
     },
-
     {
         _id: 'doc11',
         name: 'Dr. Zoe Kelly',
@@ -243,14 +233,13 @@ export const doctors = [
         speciality: 'Gastroenterologist',
         degree: 'MBBS, DM Gastroenterology',
         experience: '11 Years',
-        about: 'Specializes in digestive health, liver diseases, gastrointestinal disorders, and endoscopic procedures.',
+        about: 'Dr. Zoe Kelly specializes in digestive health and the treatment of gastrointestinal disorders. She has extensive experience managing liver diseases, acid reflux, and other digestive conditions. Her patient-focused approach ensures accurate diagnosis, effective treatment, and ongoing support throughout the recovery process.',
         fees: 67,
         address: {
             line1: '67 Fleet Street',
             line2: 'Southwark, London'
         }
     },
-
     {
         _id: 'doc12',
         name: 'Dr. Patrick Harris',
@@ -258,14 +247,13 @@ export const doctors = [
         speciality: 'Neurologist',
         degree: 'MBBS, DM Neurology',
         experience: '9 Years',
-        about: 'Offers expert care for neurological conditions with a focus on patient education and long-term recovery.',
+        about: 'Dr. Patrick Harris is committed to helping patients manage neurological disorders through advanced diagnostic techniques and evidence-based treatments. He works closely with patients and their families to develop individualized care plans that support recovery, symptom management, and improved quality of life.',
         fees: 62,
         address: {
             line1: '18 Tower Bridge Road',
             line2: 'Bermondsey, London'
         }
     },
-
     {
         _id: 'doc13',
         name: 'Dr. Chloe Evans',
@@ -273,14 +261,13 @@ export const doctors = [
         speciality: 'General Physician',
         degree: 'MBBS, MD',
         experience: '7 Years',
-        about: 'Committed to evidence-based medicine and helping patients achieve better overall health through preventive care.',
+        about: 'Dr. Chloe Evans focuses on preventive medicine, chronic disease management, and routine healthcare services. She believes in building long-term relationships with patients and providing personalized care tailored to individual needs. Her dedication to medical excellence helps patients maintain healthier and more fulfilling lives.',
         fees: 52,
         address: {
             line1: '103 Regent Street',
             line2: 'Soho, London'
         }
     },
-
     {
         _id: 'doc14',
         name: 'Dr. Ryan Martinez',
@@ -288,14 +275,13 @@ export const doctors = [
         speciality: 'Gynecologist',
         degree: 'MBBS, MS',
         experience: '8 Years',
-        about: 'Experienced in pregnancy care, women’s wellness, minimally invasive procedures, and reproductive health management.',
+        about: 'Dr. Ryan Martinez specializes in reproductive health, prenatal care, and women’s wellness services. He is known for his compassionate communication style and dedication to patient comfort. By combining modern medical techniques with personalized attention, he delivers comprehensive gynecological care for every patient.',
         fees: 63,
         address: {
             line1: '29 Piccadilly Circus',
             line2: 'Mayfair, London'
         }
     },
-
     {
         _id: 'doc15',
         name: 'Dr. Amelia Hill',
@@ -303,12 +289,12 @@ export const doctors = [
         speciality: 'Dermatologist',
         degree: 'MBBS, MD Dermatology',
         experience: '4 Years',
-        about: 'Provides personalized skincare treatments and specializes in acne, eczema, and skin rejuvenation therapies.',
+        about: 'Dr. Amelia Hill is passionate about helping patients achieve healthy and confident skin. She treats acne, eczema, psoriasis, and other dermatological conditions using modern evidence-based treatments. Her commitment to patient satisfaction and personalized care ensures excellent outcomes and long-term skin health.',
         fees: 38,
         address: {
             line1: '76 Brick Lane',
             line2: 'Shoreditch, London'
         }
     }
-
 ]
+
