@@ -10,7 +10,7 @@ const AppContextProvider = (props) => {
     const currencySymbol = "$"
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
-    const [token, setToken] = useState("")
+    const [token, setToken] = useState(localStorage.getItem("token") ? localStorage.getItem("token") : "")
 
     const [doctors, setDoctors] = useState([])
 
@@ -18,16 +18,16 @@ const AppContextProvider = (props) => {
 
         try {
 
-            const {data} = await axios.get(backendUrl+"/api/doctor/list")
-            if(data.success){
+            const { data } = await axios.get(backendUrl + "/api/doctor/list")
+            if (data.success) {
                 setDoctors(data.doctors)
             }
-            else{
+            else {
                 toast.error(data.message)
             }
 
         }
-        catch(error){
+        catch (error) {
             console.log("Error Occured while reaching to the api : ", error)
             toast.error(error.message)
         }
@@ -39,11 +39,11 @@ const AppContextProvider = (props) => {
     }, [])
 
     const value = {
-        doctors, 
+        doctors,
         currencySymbol,
         backendUrl,
         token, setToken,
-        
+
 
     }
 
