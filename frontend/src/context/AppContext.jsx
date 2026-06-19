@@ -60,13 +60,23 @@ const AppContextProvider = (props) => {
         }
     }
 
+    useEffect(() => {
+        if(token) {
+            loadUserProfileData()
+        }
+        else{
+            setUserData(null)
+        }
+    }, [token])
+
 
     const value = {
         doctors,
         currencySymbol,
         backendUrl,
         token, setToken,
-
+        userData, setUserData,
+        loadUserProfileData,
 
     }
 
