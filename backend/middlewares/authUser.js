@@ -8,7 +8,8 @@ const authUser = async (req, res, next) => {
             return res.json({ success: false, message: "Not Authorized Login Again"})
         }
 
-        const token_decode = jwt.verify(token, process.env.JWT_SECRET)
+        const token_decode = await jwt.verify(token, process.env.JWT_SECRET)
+        req.body = req.body || {}
         req.body.userId = token_decode.id
 
         next()
@@ -16,9 +17,9 @@ const authUser = async (req, res, next) => {
 
     }
     catch(error){
-        console.log("Error occured")
+        console.log("Error occured white authentication of token",error)
         res.json({success:false, message:error.message})
     }
 }
 
-export default authAdmin
+export default authUser
