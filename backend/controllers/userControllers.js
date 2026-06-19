@@ -9,9 +9,9 @@ const registerUser = async (req, res) => {
 
     try{
 
-        const {name, email, password} = req.body()
+        const {name, email, password} = req.body
 
-        if(!name || !emai || !password){
+        if(!name || !email || !password){
             return res.json({success:false, message:"Missing Credentials!"})
         }
 
@@ -49,4 +49,40 @@ const registerUser = async (req, res) => {
 
 }
 
-export {registerUser}
+// API for user login
+const loginUser = async (req, res) => {
+
+    try {
+        
+        const {email, password} = req.body
+
+        const user = await userModel.findOne({email})
+        if(!user){
+            return res.json({success:false, message:`Email - ${email} does not exist!`})
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password)
+        if(isMatch){
+            const token = jwt.sign({id:user._id}, process.env.JWT_SECRET)
+            res.json({success:true, token})
+        }
+        else{
+            res.json({success:false, message:"Please enter correct Password!"})
+        }
+
+
+    }
+    catch (error) {
+        console.log("Error Occured while user login : ",error)
+        res.json({success:false, message:error.message})
+    }
+
+
+}
+
+
+
+
+
+
+export {registerUser, loginUser}
