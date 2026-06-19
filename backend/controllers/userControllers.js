@@ -49,7 +49,7 @@ const registerUser = async (req, res) => {
 
 }
 
-// API for user login
+// API for user login 
 const loginUser = async (req, res) => {
 
     try {
@@ -80,9 +80,24 @@ const loginUser = async (req, res) => {
 
 }
 
+// API to get User Profile Data
+const getProfile = async (req, res) => {
+    try {
+
+        const { userId } = req.body
+
+        userData = userModel.findById(userId).select("-password")
+
+        res.json({ success: true, userdata })
+
+    }
+    catch (error) {
+        console.log("Error Occured while fetching the user data : ", error)
+        res.json({success : false, message:error.message})
+    }
+}
 
 
 
 
-
-export { registerUser, loginUser }
+export { registerUser, loginUser, getProfile }
