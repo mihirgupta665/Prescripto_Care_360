@@ -8,6 +8,8 @@ const authUser = async (req, res, next) => {
             return res.json({ success: false, message: "Not Authorized Login Again"})
         }
 
+        // find by id in user data if user exist only then sent the nex() else return a response that not authorized login again
+
         const token_decode = await jwt.verify(token, process.env.JWT_SECRET)
         req.body = req.body || {}
         req.body.userId = token_decode.id
@@ -17,7 +19,7 @@ const authUser = async (req, res, next) => {
 
     }
     catch(error){
-        console.log("Error occured white authentication of token",error)
+        console.log("Error occured while authentication of token",error)
         res.json({success:false, message:error.message})
     }
 }

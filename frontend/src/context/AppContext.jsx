@@ -13,6 +13,7 @@ const AppContextProvider = (props) => {
     const [token, setToken] = useState(localStorage.getItem("token") ? localStorage.getItem("token") : "")
 
     const [doctors, setDoctors] = useState([])
+    const [userData, setUserData] = useState(false)
 
     const getDoctorsData = async () => {
 
@@ -37,6 +38,28 @@ const AppContextProvider = (props) => {
     useEffect(() => {
         getDoctorsData()
     }, [])
+
+
+    const loadUserProfileData = async () => {
+        try {
+            
+            const {data} = await axios.get(backendUrl+"/api/user/get-profile", {headers: {token}})
+            
+            if(data.success){
+                setUserData(data.userData)
+            }
+            else{
+                toast.error(error.message)
+            }
+
+
+        }
+        catch (error) {
+            console.log("Error Occured during while calling the get-profile api", error)
+            toast.error(error.message)
+        }
+    }
+
 
     const value = {
         doctors,
