@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { AppContext } from "../context/AppContext"
 import { assets } from "../assets/assets"
 import RelatedDoctors from "../components/RelatedDoctors"
+import { toast } from "react-toastify"
 
 const Appointment = () => {
 
     const { docId } = useParams()
-    const { doctors, currencySymbol } = useContext(AppContext)
+    const { doctors, currencySymbol, backendUrl, token, getDoctorsData } = useContext(AppContext)
+    const navigate = useNavigate()
+    
     const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
     const [docInfo, setDocInfo] = useState(null)
@@ -21,6 +24,10 @@ const Appointment = () => {
         setDocInfo(docInfo)
         // console.log(docInfo)
     }
+
+    useEffect(() => {
+        fetchDocInfo()
+    }, [doctors, docId])
 
     const getAvailableSlots = async () => {
         setDocSlots([])  // then are there chances to lose already booked slots as we making docSlot empty
@@ -75,16 +82,40 @@ const Appointment = () => {
     }
 
     useEffect(() => {
-        fetchDocInfo()
-    }, [doctors, docId])
-
-    useEffect(() => {
         getAvailableSlots()
     }, [docInfo])
 
     useEffect(() => {
         console.log(docSlots);
     }, [docSlots])
+
+
+    // Book Appointment Function
+    const bookAppointment = async () => {
+
+        if (!token) {
+            toast.warn("Login required to book the Appointment")
+            return navigate("/login")
+        }
+
+        try {
+            
+            const date = docSlots[slotIndex][0].datetime
+
+            let day = date.getDate()
+            let month = date.getMonth()+1
+            let year = date.getFullYear()
+
+            const slotDate = day + "_" + month + "_" + year
+            // console.log(slotDate);
+
+
+        }
+        catch (error) {
+            
+        }
+
+    }
 
     return docInfo && (
         <div>
@@ -141,7 +172,7 @@ const Appointment = () => {
                         </p>
                     ))}
                 </div>
-                <button className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6">Book An Appointment</button>
+                <button onClick={bookAppointment} className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6">Book An Appointment</button>
             </div>
 
             {/* Listing Related Doctors */}
