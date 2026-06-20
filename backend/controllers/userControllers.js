@@ -153,7 +153,10 @@ const bookAppointment = async (req, res) => {
         // Checking for Slots Availability
         let slots_booked = docData.slots_booked
 
-        // what is the value of slot dat and how it is working as the index 
+        // what is the value of slotDate and how it is working as the index 
+        // what is the value of slot time
+        // why i was understanding is that slots_booked is an object and slotDate is property but the array of slotDate what i though will contain object with properties datatime and time
+        // if slot time is only thime then why in that slodate only time is added date should also be added or is this happeing that we are changine the intial formal to key as date(string) and value as array of time(string) only
         if (slots_booked[slotDate]) {
             if (slots_booked[slotdate].includes(slotTime)) {
                 return res.json({ success: false, message: `Doctor ${ docData.name }, Slot is Busy` })
@@ -192,7 +195,7 @@ const bookAppointment = async (req, res) => {
         // updating booked_slots of doctor in database
         await doctorModel.findByIdAndUpdate(docId, {slots_booked})
 
-        res.json({success:true, message:`Appointment Booked for :\n${userData.name} with ${docData.name}`})
+        res.json({success:true, message:`Appointment Booked for : \nUser - ${userData.name} with Doctor -${docData.name}`})
 
 
     }

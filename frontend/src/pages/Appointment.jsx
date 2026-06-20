@@ -4,6 +4,7 @@ import { AppContext } from "../context/AppContext"
 import { assets } from "../assets/assets"
 import RelatedDoctors from "../components/RelatedDoctors"
 import { toast } from "react-toastify"
+import axios from "axios"
 
 const Appointment = () => {
 
@@ -109,10 +110,21 @@ const Appointment = () => {
             const slotDate = day + "_" + month + "_" + year
             // console.log(slotDate);
 
+            const { data } = await axios.post(backendUrl+"/api/user/book-appointment", {docId, slotDate, slotTime}, {headers : {token}})
+            if (data.success){
+                toast.success(data.message)
+                getDoctorsData()
+                navigate("/my-appointments")
+            }
+            else{
+                toast.error(data.message)
+            }
+
 
         }
         catch (error) {
-            
+            console.log("Error occured while reaching to the api : ",error)
+            toast.error(error.message)
         }
 
     }
@@ -157,7 +169,7 @@ const Appointment = () => {
                     {
                         docSlots.length && docSlots.map((item, index) => (
                             <div onClick={() => setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? "bg-primary text-white" : "border border-gray-200"}`} key={index}>
-                                {/* {console.log("day", item)}  entire day */}
+                                {/* {console.log("day", item)}  // entire day */}
                                 <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
                                 <p>{item[0] && item[0].datetime.getDate()}</p>
                             </div>
