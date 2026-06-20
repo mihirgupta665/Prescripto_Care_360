@@ -23,7 +23,7 @@ const Appointment = () => {
     }
 
     const getAvailableSlots = async () => {
-        setDocSlots([])
+        setDocSlots([])  // then are there chances to lose already booked slots as we making docSlot empty
         console.log("Date right Now with time : ", new Date())
 
         // getting current date
@@ -43,7 +43,7 @@ const Appointment = () => {
             if (today.getDate() === currentDate.getDate()) {
                 currentDate.setHours(currentDate.getHours() >= 10 ? currentDate.getHours() + 1 : 10)
                 currentDate.setMinutes(currentDate.getMinutes() >= 30 ? 30 : 0)
-                if(currentDate.getHours() === 10 && currentDate.getMinutes >= 30){
+                if (currentDate.getHours() === 10 && currentDate.getMinutes >= 30) {
                     currentDate.setMinutes(0)
                 }
             }
@@ -135,7 +135,7 @@ const Appointment = () => {
                 </div>
                 {/* ---- Time Slots Day Wise ---- */}
                 <div className="flex items-center gap-3 w-full overflow-x-scroll mt-4">
-                    { docSlots.length && docSlots[slotIndex].map((item, index) => (
+                    {docSlots.length && docSlots[slotIndex].map((item, index) => (
                         <p onClick={() => setSlotTime(item.time)} className={`text-m font-heavy flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? "bg-primary text-white" : "text-gray-400 border border-gray-500"}`} key={index}>
                             {item.time.toLowerCase()}
                         </p>
@@ -145,7 +145,7 @@ const Appointment = () => {
             </div>
 
             {/* Listing Related Doctors */}
-            <RelatedDoctors docId={docId} speciality={docInfo.speciality}/>
+            <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
         </div>
     )
 }

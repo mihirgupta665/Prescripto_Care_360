@@ -2,7 +2,9 @@ import validator from "validator"
 import bcrypt from "bcrypt"
 import userModel from "../models/userModel.js"
 import jwt from "jsonwebtoken"
-import {v2 as cloudinary} from "cloudinary"
+import { v2 as cloudinary } from "cloudinary"
+import doctorModel from "../models/doctorModel.js"
+import appointmentModel from "../models/appointmentModel.js"
 
 
 // API controller(function) to register user
@@ -50,7 +52,7 @@ const registerUser = async (req, res) => {
 
 }
 
-// API for user login 
+// API's Controller function for user login 
 const loginUser = async (req, res) => {
 
     try {
@@ -81,7 +83,7 @@ const loginUser = async (req, res) => {
 
 }
 
-// API to get User Profile Data
+// API's Controller to get User Profile Data
 const getProfile = async (req, res) => {
     try {
 
@@ -98,6 +100,7 @@ const getProfile = async (req, res) => {
     }
 }
 
+// API's  Controller to update the User Profile Data
 const updateProfile = async (req, res) => {
 
     try {
@@ -111,23 +114,93 @@ const updateProfile = async (req, res) => {
 
         await userModel.findByIdAndUpdate(userId, { name, phone, address: JSON.parse(address), dob, gender })
 
-        if(imageFile){
+        if (imageFile) {
 
             // upload image to cloudinary
-            const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resource_type : "image" })
-            const imageURL  = imageUpload.secure_url
+            const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" })
+            const imageURL = imageUpload.secure_url
 
-            await userModel.findByIdAndUpdate(userId, {image : imageURL})
+            await userModel.findByIdAndUpdate(userId, { image: imageURL })
 
         }
 
-        res.json({success:true, message:`User - ${name} Profile Updated Successfully`})
+        res.json({ success: true, message: `User - ${name} Profile Updated Successfully` })
 
     }
 
     catch (error) {
-        console.log("Error Occured while updating the values in the user database : ",error)
-        res.json({success:false, message:error.message})
+        console.log("Error Occured while updating the values in the user database : ", error)
+        res.json({ success: false, message: error.message })
+    }
+
+}
+
+// API's Controller function to book the Appointment with Doctor
+const bookAppointment = async (req, res) => {
+
+    try {
+
+        const { userId, docId, slotDate, slotTime } = req.body
+
+
+        // Fetching Doctor Data
+        const docData = await doctorModel.findById(docId).select("-password")
+
+        if (docData.available) {
+            return res.json({ success: false, message: "Doctor is not Available" })
+        }
+
+        // Checking for Slots Availability
+        let slots_booked = docData.slots_booked
+
+        // what is the value of slot dat and how it is working as the index 
+        if (slots_booked[slotDate]) {
+            if (slots_booked[slotdate].includes(slotTime)) {
+                return res.json({ success: false, message: `Doctor ${ docData.name }, Slot is Busy` })
+            }
+            else{
+                // book the appointment
+                slots_booked[slotDate].push(slotTime)   
+            }
+        }
+        else{
+            slots_booked[slotDate] = []
+            slots_booked[slotData].push(slotTime) // book the appointment
+        }
+
+        delete docData.slots_booked
+
+
+        // Fetcing User Data
+        const userData = await userModel.findById(userId).select("-password") 
+
+        const appointmentData = {
+            userId,
+            docId,
+            userData,
+            docData,
+            amount:docData.fees,
+            slotTime,
+            slotDate,
+            date: Date.now()
+        }
+
+        newAppointment = new appointmentModel(appointmentData)
+        await newAppointment.save()
+
+
+        // updating booked_slots of doctor in database
+        await doctorModel.findByIdAndUpdate(docId, {slots_booked})
+
+        res.json({success:true, message:`Appointment Booked for :\n${userData.name} with ${docData.name}`})
+
+
+    }
+    catch (error) {
+
+        console.log("Error while booking and saving the appointment in the database : ", error)
+        res.json({succes:true, message:error.message})
+
     }
 
 }
@@ -135,4 +208,6 @@ const updateProfile = async (req, res) => {
 
 
 
-export { registerUser, loginUser, getProfile, updateProfile }
+
+
+export { registerUser, loginUser, getProfile, updateProfile, bookAppointment }
