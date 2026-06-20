@@ -1,16 +1,54 @@
 import React, { useContext } from "react"
 import {AppContext} from "../context/AppContext"
+import { useState } from "react"
+import axios from "axios"
+import { toast } from "react-toastify"
+import { useEffect } from "react"
+import {useNavigate} from "react-router-dom"
 
 const MyAppointments = () => {
 
-    const {doctors} = useContext(AppContext)
+    const { backendUrl, token } = useContext(AppContext)
+    const navigate = useNavigate()
+
+    const [appointments, setAppointment ] = useState([])
+
+    const getUserAppointment = async() => {
+
+        try {
+            
+            const {data} = await axios.get(backendUrl+"/api/user/appointments", {headers:{token}})
+            
+            if(data.success){
+                setAppointment(data.appointments.reverse())
+                console.log(data.appointments)
+            }
+
+        }
+        catch (error) {
+            console.log("Error Occured while reaching to the api to get the appointments. \nError : ",error)
+            toast.error(error.message)
+        }
+
+    }
+
+    useEffect( () => {
+
+        if(token) {
+            getUserAppointment()
+        }
+        else {
+            navigate(backendUrl+"/login")
+        }
+
+    }, [token])
 
     return (
         <div>
             <p className="pb-3 mt-12 font-medium text-zinc-700 border-b">My Appointments</p>
             <div >
                 {
-                    doctors.slice(0,3).map((item, index) => (
+                    appointments.map((item, index) => (
                         <div className="grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b" key={index}>
                             <div>
                                 <img className="w-32 bg-indigo-50" src={item.image} alt="" />
