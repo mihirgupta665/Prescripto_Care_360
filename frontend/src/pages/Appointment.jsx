@@ -11,7 +11,7 @@ const Appointment = () => {
     const { docId } = useParams()
     const { doctors, currencySymbol, backendUrl, token, getDoctorsData } = useContext(AppContext)
     const navigate = useNavigate()
-    
+
     const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
     const [docInfo, setDocInfo] = useState(null)
@@ -31,8 +31,8 @@ const Appointment = () => {
     }, [doctors, docId])
 
     const getAvailableSlots = async () => {
-        setDocSlots([])  // then are there chances to lose already booked slots as we making docSlot empty
-        console.log("Date right Now with time : ", new Date())
+        setDocSlots([])
+        // console.log("Date right Now with time : ", new Date())
 
         // getting current date
         let today = new Date()
@@ -64,6 +64,15 @@ const Appointment = () => {
             let timeSlots = []
             while (currentDate < endTime) {
                 let formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) // explain this line with outputs
+
+                let day = currentDate.getDate()
+                let month = currentDate.getMonth()+1
+                let year = currentDate.getFullYear()
+
+                const slotDate = day + "_" + month + "_" + year
+                const slotTime = formattedTime
+
+                const isSlotAvailable = docInfo.slots_booked
 
                 // add slots to array
                 timeSlots.push({
@@ -100,30 +109,30 @@ const Appointment = () => {
         }
 
         try {
-            
+
             const date = docSlots[slotIndex][0].datetime
 
             let day = date.getDate()
-            let month = date.getMonth()+1
+            let month = date.getMonth() + 1
             let year = date.getFullYear()
 
             const slotDate = day + "_" + month + "_" + year
             // console.log(slotDate);
 
-            const { data } = await axios.post(backendUrl+"/api/user/book-appointment", {docId, slotDate, slotTime}, {headers : {token}})
-            if (data.success){
+            const { data } = await axios.post(backendUrl + "/api/user/book-appointment", { docId, slotDate, slotTime }, { headers: { token } })
+            if (data.success) {
                 toast.success(data.message)
                 getDoctorsData()
                 navigate("/my-appointments")
             }
-            else{
+            else {
                 toast.error(data.message)
             }
 
 
         }
         catch (error) {
-            console.log("Error occured while reaching to the api : ",error)
+            console.log("Error occured while reaching to the api : ", error)
             toast.error(error.message)
         }
 
@@ -168,10 +177,20 @@ const Appointment = () => {
                 <div className="flex gap-3 items-center w-full overflow-x-scroll mt-4">
                     {
                         docSlots.length && docSlots.map((item, index) => (
+                            // item.length != 0 && 
                             <div onClick={() => setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex === index ? "bg-primary text-white" : "border border-gray-200"}`} key={index}>
                                 {/* {console.log("day", item)}  // entire day */}
-                                <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
-                                <p>{item[0] && item[0].datetime.getDate()}</p>
+                                <p>{item[0] && daysOfWeek[item[0].datetime.getDay()] || daysOfWeek[docSlots[index + 1][0].datetime.getDay()]}</p>
+                                <p>{item[0] && item[0].datetime.getDate() || docSlots[index + 1][0].datetime.getDate() - 1}</p>
+                                {/* {
+                                    item.length == 0 &&
+                                    <p>
+                                        { daysOfWeek[docSlots[index+1][0].datetime.getDay()] }
+                                        <br />
+                                        {docSlots[index + 1][0].datetime.getDate() - 1} 
+                                    </p>
+
+                                } */}
                             </div>
                         ))
                     }
@@ -184,7 +203,12 @@ const Appointment = () => {
                         </p>
                     ))}
                 </div>
-                <button onClick={bookAppointment} className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6">Book An Appointment</button>
+                {
+                    !slotTime 
+                        ? <button onClick={bookAppointment} className={`text-sm font-light px-14 py-3 rounded-full my-6 ${!slotTime ? "bg-gray-100 text-black" : "bg-primary text-white "}` } disabled >Book An Appointment</button>
+                        : <button onClick={bookAppointment} className={`text-sm font-light px-14 py-3 rounded-full my-6 ${!slotTime ? "bg-gray-100 text-black" : "bg-primary text-white "}`} >Book An Appointment</button>
+                }
+                
             </div>
 
             {/* Listing Related Doctors */}
