@@ -6,7 +6,7 @@ import { AppContext } from "../context/AppContext"
 
 const Navbar = () => {
 
-    const {token, setToken} = useContext(AppContext)
+    const {token, setToken, userData} = useContext(AppContext)
 
     const navigate = useNavigate(); 
     const [showMenu, setShowMenu]  = useState(false)
@@ -39,10 +39,10 @@ const Navbar = () => {
             </ul>
             <div className="flex items-center gap-4">
                 {
-                    token
+                    token && userData
                     ? <div className="flex items-center gap-2 cursor-pointer group relative">
                         {/* try to add user personalized picture */}
-                        <img className="w-8 rounded-full" src={assets.profile_pic} alt="" />
+                        <img className="w-8 rounded-full" src={userData.image} alt="" />
                         <img className="w-2" src={assets.dropdown_icon} alt="" />
                         {/* group hover makes it visible as block when its group is hovered */}
                         <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
