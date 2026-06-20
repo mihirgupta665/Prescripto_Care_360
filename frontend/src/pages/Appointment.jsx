@@ -51,7 +51,7 @@ const Appointment = () => {
             if (today.getDate() === currentDate.getDate()) {
                 currentDate.setHours(currentDate.getHours() >= 10 ? currentDate.getHours() + 1 : 10)
                 currentDate.setMinutes(currentDate.getMinutes() >= 30 ? 30 : 0)
-                if (currentDate.getHours() === 10 && currentDate.getMinutes >= 30) {
+                if (currentDate.getHours() === 10 && currentDate.getMinutes() >= 30) {
                     currentDate.setMinutes(0)
                 }
             }
@@ -72,13 +72,15 @@ const Appointment = () => {
                 const slotDate = day + "_" + month + "_" + year
                 const slotTime = formattedTime
 
-                const isSlotAvailable = docInfo.slots_booked
+                const isSlotAvailable = docInfo.slots_booked[slotDate] && docInfo.slots_booked[slotDate].includes(slotTime) ? false : true
 
-                // add slots to array
-                timeSlots.push({
-                    datetime: new Date(currentDate),
-                    time: formattedTime
-                })
+                if(isSlotAvailable) {
+                    // add slots to array
+                    timeSlots.push({
+                        datetime: new Date(currentDate),
+                        time: formattedTime
+                    })
+                }
 
                 // Increment time by 30 minutes
                 currentDate.setMinutes(currentDate.getMinutes() + 30)
@@ -92,7 +94,11 @@ const Appointment = () => {
     }
 
     useEffect(() => {
-        getAvailableSlots()
+
+        if(docInfo){
+            getAvailableSlots()
+        }
+
     }, [docInfo])
 
     useEffect(() => {
