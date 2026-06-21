@@ -90,6 +90,29 @@ const MyAppointments = () => {
     }
 
 
+    // order need to be created in backend using options
+    // now window will be created using the created order received from the backend
+    const initPay = (order) => {
+
+        const options = {
+            key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+            amount: order.amount,
+            currency: order.currency,
+            name: "Appoinment Payment",
+            description: "Appointment Payment",
+            order_id: order.id,
+            receipt: order.receipt,
+            handler: async (response) => {
+                console.log(response);
+            }    
+        }
+
+        const rzp = new window.Razorpay(options)    // razorpayment window created
+        rzp.open()  // created window opened as the popup
+
+    }
+
+
     const appointmentRazorpay = async (appointmentId) => {
 
         try {
@@ -97,7 +120,11 @@ const MyAppointments = () => {
             const {data} = await axios.post(backendUrl+"/api/user/payment-razorpay", {appointmentId}, {headers: {token}} )
 
             if(data.success){
-                console.log(data.order);
+
+                // console.log(data.order);
+                initPay(data.order)
+
+
             }
 
         }
