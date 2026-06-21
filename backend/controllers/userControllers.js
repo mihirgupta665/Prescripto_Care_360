@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken"
 import { v2 as cloudinary } from "cloudinary"
 import doctorModel from "../models/doctorModel.js"
 import appointmentModel from "../models/appointmentModel.js"
+import razorpay from "razorpay"
 
 
 // API controller(function) to register user
@@ -159,14 +160,14 @@ const bookAppointment = async (req, res) => {
         // if slot time is only thime then why in that slodate only time is added date should also be added or is this happeing that we are changine the intial formal to key as date(string) and value as array of time(string) only
         if (slots_booked[slotDate]) {
             if (slots_booked[slotDate].includes(slotTime)) {
-                return res.json({ success: false, message: `For ${ docData.name }, \nSlot at ${ slotTime } is Busy` })
+                return res.json({ success: false, message: `For ${docData.name}, \nSlot at ${slotTime} is Busy` })
             }
-            else{
+            else {
                 // book the appointment
-                slots_booked[slotDate].push(slotTime)   
+                slots_booked[slotDate].push(slotTime)
             }
         }
-        else{
+        else {
             slots_booked[slotDate] = []
             slots_booked[slotDate].push(slotTime) // book the appointment
         }
@@ -175,14 +176,14 @@ const bookAppointment = async (req, res) => {
 
 
         // Fetcing User Data
-        const userData = await userModel.findById(userId).select("-password") 
+        const userData = await userModel.findById(userId).select("-password")
 
         const appointmentData = {
             userId,
             docId,
             userData,
             docData,
-            amount:docData.fees,
+            amount: docData.fees,
             slotTime,
             slotDate,
             date: Date.now()
@@ -193,16 +194,16 @@ const bookAppointment = async (req, res) => {
 
 
         // updating booked_slots of doctor in database
-        await doctorModel.findByIdAndUpdate(docId, {slots_booked})
+        await doctorModel.findByIdAndUpdate(docId, { slots_booked })
 
-        res.json({success:true, message:`Appointment Booked for : \nUser - ${userData.name} with Doctor -${docData.name}`})
+        res.json({ success: true, message: `Appointment Booked for : \nUser - ${userData.name} with - ${docData.name}` })
 
 
     }
     catch (error) {
 
         console.log("Error while booking and saving the appointment in the database : ", error)
-        res.json({succes:true, message:error.message})
+        res.json({ succes: true, message: error.message })
 
     }
 
@@ -213,16 +214,16 @@ const bookAppointment = async (req, res) => {
 const listAppointment = async (req, res) => {
 
     try {
-        
+
         const { userId } = req.body
         const appointments = await appointmentModel.find({ userId })
 
-        res.json({success:true, appointments})
+        res.json({ success: true, appointments })
 
-    } 
+    }
     catch (error) {
-        console.log("Error Occured while getting the appointment data from the database : ",error)
-        res.json({success:false, message:error.message})
+        console.log("Error Occured while getting the appointment data from the database : ", error)
+        res.json({ success: false, message: error.message })
     }
 
 }
@@ -232,21 +233,21 @@ const listAppointment = async (req, res) => {
 const cancelAppointment = async (req, res) => {
 
     try {
-        
-        const {userId, appointmentId} = req.body
+
+        const { userId, appointmentId } = req.body
 
         const appointmentData = await appointmentModel.findById(appointmentId)
 
         // Verify Appointment User
-        if(appointmentData.userId !== userId ){
-            return res.json({success : false, message:"UnAuthorized Action"})
+        if (appointmentData.userId !== userId) {
+            return res.json({ success: false, message: "UnAuthorized Action" })
         }
 
-        await appointmentModel.findByIdAndUpdate(appointmentId, {cancelled: true})
+        await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true })
 
         // releasing doctor slot
 
-        const {docId, slotDate, slotTime} = appointmentData
+        const { docId, slotDate, slotTime } = appointmentData
 
         const doctorData = await doctorModel.findById(docId)
 
@@ -254,21 +255,61 @@ const cancelAppointment = async (req, res) => {
 
         slots_booked[slotDate] = slots_booked[slotDate].filter(slot => slot !== slotTime)
 
-        await doctorModel.findByIdAndUpdate(docId, {slots_booked})
+        await doctorModel.findByIdAndUpdate(docId, { slots_booked })
 
-        res.json({success:true, message:`Appointment Cancelled for Time - ${slotTime}`})
+        res.json({ success: true, message: `Appointment Cancelled for Time - ${slotTime}` })
 
     }
     catch (error) {
-        
-        console.log("Error Occured while cancelling the slot time of the doctor. Error : ",error)
-        res.json({success:false, message:error.message})
+
+        console.log("Error Occured while cancelling the slot time of the doctor. Error : ", error)
+        res.json({ success: false, message: error.message })
 
     }
 
 }
 
 
+const razorpayInstance = new razorpay({
+
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
+
+})
+
+// API Controllers function to make the appointment online using razor pay
+const paymentRazorpay = async (req, res) => {
+
+    try {
+
+        const { appointmentId } = req.body
+
+        const appointmentData = await appointmentModel.findById(appointmentId)
+
+        if (!appointmentData || appointmentData.cancelled) {
+            return res.json({ success: false, message: "Appointment Cancelled or Appointment Not Found" })
+        }
+
+        // creating options for Razor Pay Payment
+        const options = {
+            amount: appointmentData.amount * 100,
+            currency: process.env.CURRENCY,
+            receipt: appointmentId,
+        }
+
+        // creation of an order
+        const order = await razorpayInstance.orders.create(options)
+
+        res.json({ success: true, order })
+
+    } 
+    catch (error) {
+        console.log("Error Occured while creating an order with RazorPay. Error : ",error)
+        res.json({success:false, message:error.message})
+    }
+
+
+}
 
 
 

@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom"
 
 const MyAppointments = () => {
 
-    const { backendUrl, token } = useContext(AppContext)
+    const { backendUrl, token, getDoctorsData } = useContext(AppContext)
     const navigate = useNavigate()
 
     const [appointments, setAppointments ] = useState([])
@@ -30,7 +30,7 @@ const MyAppointments = () => {
             
             if(data.success){
                 setAppointments(data.appointments.reverse())
-                console.log(data.appointments)
+                // console.log(data.appointments)
             }
 
         }
@@ -66,7 +66,7 @@ const MyAppointments = () => {
                 if(data.success){
                     toast.success(data.message)
                     getUserAppointments()
-
+                    getDoctorsData()
                 }
                 else{
                     toast.error(data.message)
