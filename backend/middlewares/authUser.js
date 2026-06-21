@@ -14,6 +14,7 @@ const authUser = async (req, res, next) => {
         req.body = req.body || {}
         req.body.userId = token_decode.id
 
+        // check for all user that specific id exists or not if userdata found the only next() otherwise return failure
         next()
         
 

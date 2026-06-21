@@ -1,53 +1,53 @@
 import React, { useContext } from "react"
-import {AppContext} from "../context/AppContext"
+import { AppContext } from "../context/AppContext"
 import { useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
 import { useEffect } from "react"
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const MyAppointments = () => {
 
     const { backendUrl, token, getDoctorsData } = useContext(AppContext)
     const navigate = useNavigate()
 
-    const [appointments, setAppointments ] = useState([])
-    const month = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" ]
+    const [appointments, setAppointments] = useState([])
+    const month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
 
     const slotDateFormat = (slotDate) => {
 
         const dateArray = slotDate.split("_")
         // month should be -1 as index starts from 0
-        return dateArray[0]+" "+month[Number(dateArray[1] -1)]+" "+dateArray[2]
+        return dateArray[0] + " " + month[Number(dateArray[1] - 1)] + " " + dateArray[2]
 
     }
 
-    const getUserAppointments = async() => {
+    const getUserAppointments = async () => {
 
         try {
-            
-            const {data} = await axios.get(backendUrl+"/api/user/appointments", {headers:{token}})
-            
-            if(data.success){
+
+            const { data } = await axios.get(backendUrl + "/api/user/appointments", { headers: { token } })
+
+            if (data.success) {
                 setAppointments(data.appointments.reverse())
-                // console.log(data.appointments)
+                console.log(data.appointments)
             }
 
         }
         catch (error) {
-            console.log("Error Occured while reaching to the api to get the appointments. \nError : ",error)
+            console.log("Error Occured while reaching to the api to get the appointments. \nError : ", error)
             toast.error(error.message)
         }
 
     }
 
-    useEffect( () => {
+    useEffect(() => {
 
-        if(token) {
+        if (token) {
             getUserAppointments()
         }
         else {
-            navigate(backendUrl+"/login")
+            navigate(backendUrl + "/login")
         }
 
     }, [token])
@@ -57,23 +57,23 @@ const MyAppointments = () => {
     const cancelAppointment = async (appointmentId) => {
 
         try {
-           
+
             //    console.log(appointmentId) 
-            if (token){
+            if (token) {
 
-                const {data} = await axios.post(backendUrl+"/api/user/cancel-appointment", {appointmentId}, {headers:{token}})
+                const { data } = await axios.post(backendUrl + "/api/user/cancel-appointment", { appointmentId }, { headers: { token } })
 
-                if(data.success){
+                if (data.success) {
                     toast.success(data.message)
                     getUserAppointments()
                     getDoctorsData()
                 }
-                else{
+                else {
                     toast.error(data.message)
                 }
 
             }
-            else{
+            else {
 
                 toast.warn("Unauthorized! Login Again!!")
                 navigate("/login")
@@ -81,8 +81,8 @@ const MyAppointments = () => {
             }
         }
         catch (error) {
-            
-            console.log("Error Occured while reaching to the API to cancel the Appointment. Error : ",error)
+
+            console.log("Error Occured while reaching to the API to cancel the Appointment. Error : ", error)
             toast.error(error.message)
 
         }
@@ -96,15 +96,41 @@ const MyAppointments = () => {
 
         const options = {
             key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-            amount: order.amount,
+            amount: order.amount*100,
             currency: order.currency,
             name: "Appoinment Payment",
             description: "Appointment Payment",
             order_id: order.id,
             receipt: order.receipt,
             handler: async (response) => {
-                console.log(response);
-            }    
+                // console.log(response);
+                /*
+                    razorpay_order_id  :"order_T4MnPoUFDFpcye"
+                    razorpay_payment_id : "pay_T4Mum5HpfL6beS"
+                    razorpay_signature : "9972bb0576704e541af02ec43125c65d612d7430150e9d57ccf97365e568cbd6"
+                */
+
+                try {
+                
+                    const {data} = await axios.post(backendUrl+"/api/user/verifyRazorpay", response, {headers: {token}} )
+                    if(data.success){
+                        getUserAppointments()
+                        toast.success(data.message)
+                        // navigate("/my-appointment")
+                    }
+                    else{
+                        toast.error(data.message)
+                    }
+
+                }
+                catch (error) {
+                    
+                    console.log("Error Occured while reaching the API for verification of payment. Error : ",error)
+                    toast.error(error.message)
+
+                }
+
+            }
         }
 
         const rzp = new window.Razorpay(options)    // razorpayment window created
@@ -117,27 +143,27 @@ const MyAppointments = () => {
 
         try {
 
-            if(token){
+            if (token) {
 
-                
-                const {data} = await axios.post(backendUrl+"/api/user/payment-razorpay", {appointmentId}, {headers: {token}} )
-                
-                if(data.success){
-                    
+
+                const { data } = await axios.post(backendUrl + "/api/user/payment-razorpay", { appointmentId }, { headers: { token } })
+
+                if (data.success) {
+
                     // console.log(data.order);
                     initPay(data.order)
-                       
+
                 }
 
             }
-            else{
+            else {
                 toast.warn("Unauthorized to make Payment! Kindly Login Again!")
                 navigate("/login")
             }
 
         }
         catch (error) {
-            
+
         }
 
 
@@ -163,9 +189,10 @@ const MyAppointments = () => {
                             </div>
                             <div></div>
                             <div className="flex flex-col gap-2 justify-end">
-                                { !item.cancelled && <button onClick={() => appointmentRazorpay(item._id)} className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded border-green-500 hover:bg-green-600 hover:text-white transition-all duration-500 ">Pay Online</button> }
-                                { !item.cancelled && <button onClick={() => cancelAppointment(item._id) } className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded border-red-500 hover:bg-red-600 hover:text-white transition-all duration-500">Cancel Appointment</button>}
-                                { item.cancelled && <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500 " disabled>Appointment Cancelled</button> }
+                                {!item.cancelled && item.payment && <button className="sm:min-w-48 py-2 border rounded text-stone-500 bg-primary text-white" disabled>Paid</button> }
+                                {!item.cancelled && !item.payment && <button onClick={() => appointmentRazorpay(item._id)} className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded border-green-500 hover:bg-green-600 hover:text-white transition-all duration-500 ">Pay Online</button>}
+                                {!item.cancelled && <button onClick={() => cancelAppointment(item._id)} className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded border-red-500 hover:bg-red-600 hover:text-white transition-all duration-500">Cancel Appointment</button>}
+                                {item.cancelled && <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500 " disabled>Appointment Cancelled</button>}
                             </div>
                         </div>
                     ))
