@@ -116,15 +116,23 @@ const MyAppointments = () => {
     const appointmentRazorpay = async (appointmentId) => {
 
         try {
-            
-            const {data} = await axios.post(backendUrl+"/api/user/payment-razorpay", {appointmentId}, {headers: {token}} )
 
-            if(data.success){
+            if(token){
 
-                // console.log(data.order);
-                initPay(data.order)
+                
+                const {data} = await axios.post(backendUrl+"/api/user/payment-razorpay", {appointmentId}, {headers: {token}} )
+                
+                if(data.success){
+                    
+                    // console.log(data.order);
+                    initPay(data.order)
+                       
+                }
 
-
+            }
+            else{
+                toast.warn("Unauthorized to make Payment! Kindly Login Again!")
+                navigate("/login")
             }
 
         }
