@@ -248,7 +248,7 @@ const cancelAppointment = async (req, res) => {
 
         const {docId, slotDate, slotTime} = appointmentData
 
-        const doctorData = doctorModel.findById(docId)
+        const doctorData = await doctorModel.findById(docId)
 
         const slots_booked = doctorData.slots_booked
 

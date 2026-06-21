@@ -65,7 +65,7 @@ const MyAppointments = () => {
 
                 if(data.success){
                     toast.success(data.message)
-                    getUserAppointment()
+                    getUserAppointments()
 
                 }
                 else{
@@ -109,8 +109,9 @@ const MyAppointments = () => {
                             </div>
                             <div></div>
                             <div className="flex flex-col gap-2 justify-end">
-                                <button className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded border-green-500 hover:bg-green-600 hover:text-white transition-all duration-500 ">Pay Online</button>
-                                <button onClick={() => cancelAppointment(item._id) } className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded border-red-500 hover:bg-red-600 hover:text-white transition-all duration-500">Cancek Appointment</button>
+                                { !item.cancelled && <button className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded border-green-500 hover:bg-green-600 hover:text-white transition-all duration-500 ">Pay Online</button> }
+                                { !item.cancelled && <button onClick={() => cancelAppointment(item._id) } className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded border-red-500 hover:bg-red-600 hover:text-white transition-all duration-500">Cancel Appointment</button>}
+                                { item.cancelled && <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-500 " disabled>Appointment Cancelled</button> }
                             </div>
                         </div>
                     ))
