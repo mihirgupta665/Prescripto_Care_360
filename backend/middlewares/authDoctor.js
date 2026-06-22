@@ -1,24 +1,25 @@
 import jwt from "jsonwebtoken"
-import doctorModel from "../models/doctorModel"
+import doctorModel from "../models/doctorModel.js"
 
 
 const authDoctor = async (req, res, next) => {
 
     try {
 
-        const { dToken } = req.headers
+        // in req the headers become in lower case as express changes the case to lower case
+        const { dtoken } = req.headers
 
-        if (!dToken) {
+        if (!dtoken) {
             return res.json({ success: false, message: "Not Authorized as Doctor! \nLogin Again!!" })
         }
 
-        const decodeToken = await jwt.verify(dToken, process.env.JWT_SECRET)
+        const decodeToken = await jwt.verify(dtoken, process.env.JWT_SECRET)
         const docId = decodeToken.id
 
         const docData = await doctorModel.findById(docId)
 
         if (docData) {
-            req.body ? req.body : {}
+            req.body = req.body || {}
             req.body.docId = docId
             next()
         }
