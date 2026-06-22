@@ -1,6 +1,7 @@
 import doctorModel from "../models/doctorModel.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import appointmentModel from "../models/appointmentModel.js"
 
 // API controller function for Availability of doctor
 const changeAvailability = async (req, res) => {
@@ -19,15 +20,15 @@ const changeAvailability = async (req, res) => {
 
 
 // API's controller function for list of all the doctors 
-const doctorList = async (req,res) => {
+const doctorList = async (req, res) => {
 
     try {
         const doctors = await doctorModel.find({}).select(["-password", "-email"])
-        res.json({success:true, doctors})
+        res.json({ success: true, doctors })
     }
-    catch(error){
+    catch (error) {
         console.log(error)
-        res.json({success:false, message:error.message})
+        res.json({ success: false, message: error.message })
     }
 
 }
@@ -37,44 +38,59 @@ const doctorList = async (req,res) => {
 const loginDoctor = async (req, res) => {
 
     try {
-        
-        const { email, password} = req.body
 
-        const doctor = await doctorModel.findOne({email})
+        const { email, password } = req.body
 
-        if(!doctor){
-            return res.json({success:false, message:`Email - ${email} does not exists`})
+        const doctor = await doctorModel.findOne({ email })
+
+        if (!doctor) {
+            return res.json({ success: false, message: `Email - ${email} does not exists` })
         }
 
-        const isMatch = await bcrypt.compare( password, doctor.password )
+        const isMatch = await bcrypt.compare(password, doctor.password)
 
-        if(isMatch){
+        if (isMatch) {
 
-            const token = jwt.sign({id:doctor._id}, process.env.JWT_SECRET)
-            
-            res.json({success:true, token})
+            const token = jwt.sign({ id: doctor._id }, process.env.JWT_SECRET)
+
+            res.json({ success: true, token })
 
         }
         else {
-            
-            res.json({success:false, message:"Invalid Password"})
+
+            res.json({ success: false, message: "Invalid Password" })
 
         }
 
     }
     catch (error) {
-        console.log("Error Occured during login of the doctor with credentials from the database. Error : ",error)
-        res.json({success:false, message:error.message })
-    } 
+        console.log("Error Occured during login of the doctor with credentials from the database. Error : ", error)
+        res.json({ success: false, message: error.message })
+    }
 }
 
 
 // API's controller function to get all the appointments of a particular doctor
 const appointmentsDoctor = async (req, res) => {
 
-    const {docId} = req.body
+    const { docId } = req.body
 
-    await appoint
+    try {
+
+        if(docId){
+            const appointments = await appointmentModel.find({ docId })
+            res.json({success:true, appointments})
+        }
+        else{
+            res.json({success:false, message:"Doctor Not found!"})
+        }
+
+    }
+    catch (error) {
+        console.log("Error Occured during fetching all the appointments of the doctor from the database. Error : ",error)
+        res.json({success:false, message:error.message})
+    }
+
 
 }
 
@@ -82,4 +98,4 @@ const appointmentsDoctor = async (req, res) => {
 
 
 
-export { changeAvailability, doctorList, loginDoctor }
+export { changeAvailability, doctorList, loginDoctor, appointmentsDoctor }
