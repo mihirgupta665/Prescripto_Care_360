@@ -55,10 +55,11 @@ const AdminContextProvider = (props) => {
         try {
             
 
-            const { data } = await axios.get(backendUrl+"/api/admin/appointments", {headers: {atoken}})
+            const { data } = await axios.get(backendUrl+"/api/admin/appointments", {headers: {aToken}})
 
             if(data.success){
                 setAppointments(data.appointments)
+                console.log(data.appointments)
             }
             else{
                 toast.error("API Unable to fetch Appointments")
