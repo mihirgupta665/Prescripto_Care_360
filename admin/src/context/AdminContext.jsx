@@ -8,6 +8,7 @@ const AdminContextProvider = (props) => {
 
     const [aToken, setAToken] = useState(localStorage.getItem('aToken') ? localStorage.getItem('aToken') : "")
     const [doctors, setDoctors] = useState([])
+    const [appointments, setAppointments] = useState([])
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL 
 
@@ -47,20 +48,46 @@ const AdminContextProvider = (props) => {
             toast.error(error.message)
         }
 
+    } 
+
+    const getAllAppointments = async () => {
+
+        try {
+            
+
+            const { data } = await axios.get(backendUrl+"/api/admin/appointments", {headers: {atoken}})
+
+            if(data.success){
+                setAppointments(data.appointments)
+            }
+            else{
+                toast.error("API Unable to fetch Appointments")
+
+            }
+
+
+        }
+        catch (error) {
+            console.log("Error Occured while reaching to to API for getting all appointments. Error : ",error)
+            toast.error(error.message)
+        }
+
     }
     
     const value = {
         aToken, setAToken,
         backendUrl,
         doctors, getAllDoctors,
-        changeAvailability, 
+        changeAvailability,
+        appointments, setAppointments,
+        getAllAppointments, 
 
     }
 
     return(
         <AdminContext.Provider value={value}>
             {props.children}
-        </AdminContext.Provider>
+        </AdminContext.Provider> 
     )
 
 }

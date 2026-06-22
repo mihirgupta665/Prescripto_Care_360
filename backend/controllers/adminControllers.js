@@ -124,4 +124,4 @@ const appointmentsAdmin = async (req, res) => {
 
 
 export default addDoctor
-export { loginAdmin, allDoctors }
+export { loginAdmin, allDoctors, appointmentsAdmin }
