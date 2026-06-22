@@ -52,7 +52,7 @@ const loginDoctor = async (req, res) => {
 
             const token = jwt.sign({id:doctor._id}, process.env.JWT_SECRET)
             
-            res.json({sucess:true, token})
+            res.json({success:true, token})
 
         }
         else {

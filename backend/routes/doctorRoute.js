@@ -6,7 +6,7 @@ const doctorRouter = express.Router()
 
 doctorRouter.get("/list", doctorList)
 
-doctorRouter.post("/login", doctorRouter)
+doctorRouter.post("/login", loginDoctor)
 
 
 

@@ -1,16 +1,23 @@
 import React, { useContext, useState } from "react"
 import { assets } from "../assets/assets"
-import { AdminContext } from "../context/AdminContext"
 import axios from "axios" 
 import { toast } from "react-toastify"
+import { AdminContext } from "../context/AdminContext"
+import { DoctorContext } from "../context/DoctorContext"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
+
+    const navigate = useNavigate()
+
+    const {setAToken, backendUrl} = useContext(AdminContext)
+    const {setDToken} = useContext(DoctorContext)
+
 
     const [state, setState] = useState("Admin")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const {setAToken, backendUrl} = useContext(AdminContext)
 
     const onSubmitHandler = async (event) => {
 
@@ -19,20 +26,41 @@ const Login = () => {
         try{
 
             if(state === "Admin"){
+
                 const {data} = await axios.post(backendUrl + "/api/admin/login", {email, password})
                 if(data.success) {
                     localStorage.setItem("aToken", data.token)
                     setAToken(data.token); 
-                    toast.success("You Loged In Successfully")
+                    toast.success("Admin Login Successfull \nWelcome Onboard!")
+                    navigate("/admin-dashboard")
                 }
                 else{
                     toast.error(data.message)
                 }
+
+            }
+
+            else{
+
+                const {data} = await axios.post(backendUrl+"/api/doctor/login", {email, password} )
+
+                if(data.success){
+                    localStorage.setItem("dToken", data.token)
+                    setDToken(data.token)
+                    toast.success("Doctor Login Successfull \nWelcome Onboard!")
+                    console.log(data.token)
+                    navigate("/doctor-dashboard")
+                }
+                else{
+                    toast.error(data.message)
+                }
+
             }
 
         }
         catch(error){
-
+            console.log("Error Occured while reaching the API for the login. Error : ", error)
+            toast.error(error.message)
         }
     }
 

@@ -85,7 +85,7 @@ const Dashboard = () => {
                     <div className='flex flex-col gap-4 border-b border-slate-100 p-5 lg:flex-row lg:items-center lg:justify-between'>
                         <div>
                             <p className='text-base font-semibold text-slate-800'>Doctor performance</p>
-                            <p className='mt-1 text-sm text-slate-400'>Compare demand and paid earnings across your team</p>
+                            <p className='mt-1 text-sm text-slate-400'>Demand and Paid Earnings of each Doctor</p>
                         </div>
 
                         <div className='flex flex-wrap gap-3'>
