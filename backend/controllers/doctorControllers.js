@@ -61,13 +61,20 @@ const loginDoctor = async (req, res) => {
 
         }
 
-
-
     }
     catch (error) {
-        
-    }
+        console.log("Error Occured during login of the doctor with credentials from the database. Error : ",error)
+        res.json({success:false, message:error.message })
+    } 
+}
 
+
+// API's controller function to get all the appointments of a particular doctor
+const appointmentsDoctor = async (req, res) => {
+
+    const {docId} = req.body
+
+    await appoint
 
 }
 
