@@ -5,9 +5,9 @@ import {useNavigate} from "react-router-dom"
 
 export const AdminContext = createContext()
 
-const navigate = useNavigate()
-
 const AdminContextProvider = (props) => {
+
+    const navigate = useNavigate()
 
     const [aToken, setAToken] = useState(localStorage.getItem('aToken') ? localStorage.getItem('aToken') : "")
     const [doctors, setDoctors] = useState([])

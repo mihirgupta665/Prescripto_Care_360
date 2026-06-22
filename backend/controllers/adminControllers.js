@@ -107,7 +107,7 @@ const appointmentsAdmin = async (req, res) => {
 
     try {
     
-        const appointments = await appointmentModel.find({})
+        const appointments = await appointmentModel.find({}).sort({date:-1})
         res.json({success:true, appointments})
 
 
