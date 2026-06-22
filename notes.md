@@ -17,6 +17,7 @@
 # Token Generation and Token Verification
 - First compare the password using bcrypt.compare(password, hashPassword), this returns true or false { Ex : isMatch =  bcrypt.compare(password, hashPassword) }
 - If Passoword matches generate a token using jwt(something, secret) [ Example : jwt.sign(onwhichbasic, JWT.SECRET)]
+- Pass the token as response from the backend which on frontend side at time of api call will be saved in the localStorage or session or cookies
 - To verify the token use jwt.verify(token, secret) to verify the token is authentic or not { Ex : jwt.verify(token, JWT.secret) }
 ### Token got Generated and Verified 
 
