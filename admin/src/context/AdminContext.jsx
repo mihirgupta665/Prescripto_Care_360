@@ -1,8 +1,11 @@
 import { createContext, useState } from "react";
 import axios from "axios"
 import {toast} from "react-toastify"
+import {useNavigate} from "react-router-dom"
 
 export const AdminContext = createContext()
+
+const navigate = useNavigate()
 
 const AdminContextProvider = (props) => {
 
@@ -74,6 +77,37 @@ const AdminContextProvider = (props) => {
         }
 
     }
+
+
+    const cancelAppointment = async (appointmentId) => {
+
+        try {
+
+            const {data} = await axios.post(backendUrl+"/api/admin/cancel-appointment", {appointmentId}, {headers:{aToken}})
+
+            if(data.success){
+                toast.success(data.message)
+                getAllAppointments()
+            }
+            else if(!data.success && data.message.includes("Not Authorized")){
+                toast.warn(data.message)
+                localStorage.removeItem("aToken")
+                setAToken("")
+                navigate("/login")
+            }
+            else{
+                toast.error(data.message)
+            }
+
+
+
+        }
+        catch (error) {
+            
+        }
+
+    }
+
     
     const value = {
         aToken, setAToken,
@@ -82,6 +116,7 @@ const AdminContextProvider = (props) => {
         changeAvailability,
         appointments, setAppointments,
         getAllAppointments, 
+        cancelAppointment,
 
     }
 
