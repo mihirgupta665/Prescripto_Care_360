@@ -168,11 +168,30 @@ const adminDashboard = async (req, res) => {
         const users = await userModel.find({}).select("-password")
         const appointments = await appointmentModel.find({})
 
+        const doctorAnalytics = doctors.map((doctor) => {
+            const doctorAppointments = appointments.filter(
+                (appointment) => appointment.docId === doctor._id.toString() && !appointment.cancelled
+            )
+
+            const earnings = doctorAppointments.reduce(
+                (total, appointment) => total + (appointment.payment ? appointment.amount : 0),
+                0
+            )
+
+            return {
+                doctorId: doctor._id,
+                name: doctor.name,
+                appointments: doctorAppointments.length,
+                earnings
+            }
+        })
+
         const dashData = {
             doctors: doctors.length,
             appointments: appointments.length,
             patients: users.length,
-            latestAppointments: appointments.reverse().slice(0,5)
+            latestAppointments: appointments.sort((a, b) => b.date - a.date).slice(0, 5),
+            doctorAnalytics
         }
 
         res.json({success:true, dashData})

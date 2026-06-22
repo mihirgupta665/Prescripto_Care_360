@@ -10,3 +10,23 @@
 *{
     font-family: Outfit;
 }
+
+.analytics-scrollbar::-webkit-scrollbar {
+    display: block;
+    height: 7px;
+}
+
+.analytics-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 999px;
+}
+
+.analytics-scrollbar::-webkit-scrollbar-thumb {
+    background: #c7cdfd;
+    border-radius: 999px;
+}
+
+.analytics-scrollbar {
+    scrollbar-color: #c7cdfd #f1f5f9;
+    scrollbar-width: thin;
+}

@@ -63,7 +63,7 @@ const AdminContextProvider = (props) => {
 
             if(data.success){
                 setAppointments(data.appointments)
-                console.log(data.appointments)
+                // console.log(data.appointments)
             }
             else{
                 toast.error("API Unable to fetch Appointments")
@@ -117,6 +117,7 @@ const AdminContextProvider = (props) => {
 
             if(data.success){
                 setDashData(data.dashData)
+                console.log(data.dashData)
             }
             else if(!data.success && data.message?.includes("Not Authorized")){
                 toast.warn(data.message)
@@ -147,7 +148,7 @@ const AdminContextProvider = (props) => {
         cancelAppointment,
         dashData,
         getDashData, 
-        
+
     }
 
     return(
