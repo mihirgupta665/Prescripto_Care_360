@@ -201,16 +201,64 @@ const doctorDashboard = async (req, res) => {
             }
         })
 
+        const startOfWeek = (date) => {
+            const weekDate = new Date(date)
+            const day = weekDate.getDay()
+            const diff = weekDate.getDate() - day + (day === 0 ? -6 : 1)
+            weekDate.setDate(diff)
+            weekDate.setHours(0, 0, 0, 0)
+            return weekDate
+        }
+
+        const formatWeek = (date) => date.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric"
+        })
+
+        const graphStartDate = startOfWeek(new Date(new Date().getFullYear(), 4, 25))
+
+        const weeklyAnalytics = Array.from({ length: 8 }, (_, index) => {
+            const weekStart = new Date(graphStartDate)
+            weekStart.setDate(weekStart.getDate() + (index * 7))
+
+            return {
+                week: formatWeek(weekStart),
+                earnings: 0,
+                appointments: 0
+            }
+        })
+
+        const weekLookup = new Map(weeklyAnalytics.map((week) => [week.week, week]))
+
+        appointments.forEach((appointment) => {
+            if (appointment.cancelled) {
+                return
+            }
+
+            const appointmentDate = new Date(appointment.date)
+            const week = formatWeek(startOfWeek(appointmentDate))
+            const weekData = weekLookup.get(week)
+
+            if (weekData) {
+                weekData.appointments += 1
+
+                if (appointment.isCompleted || appointment.payment) {
+                    weekData.earnings += appointment.amount
+                }
+            }
+        })
+
         const dashData = {
 
             earnings,
             appointments: appointments.length,
             patients: patients.length,
-            latestAppointments: appointments.reverse().slice(0,5)
+            latestAppointments: appointments.reverse().slice(0,5),
+            weeklyAnalytics
 
         }
 
-        res.json({success:true, dashdata})
+        res.json({success:true, dashData})
 
     }
     

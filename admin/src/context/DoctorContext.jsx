@@ -97,10 +97,11 @@ const DoctorContextProvider = (props) => {
 
         try {
          
-            const {data} = axios.get(backendUrl+"/api/doctor/dashboard", {headers: {dToken}})
+            const {data} = await axios.get(backendUrl+"/api/doctor/dashboard", {headers: {dToken}})
 
             if(data.success){
                 setDashData(data.dashData)
+                console.log(data.dashData)
             }
             else if(data.message.includes("Not Authorized")){
                 setDToken(" ")
@@ -132,7 +133,7 @@ const DoctorContextProvider = (props) => {
         cancelAppointment,
         dashData, setDashData,
         getDashData,
-        
+
         
 
     }
