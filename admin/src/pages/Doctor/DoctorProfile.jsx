@@ -1,13 +1,55 @@
 import React, { useContext, useState } from 'react'
 import { DoctorContext } from '../../context/DoctorContext'
 import { AppContext } from '../../context/AppContext'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const DoctorProfile = () => {
 
-	const { dToken, profileData, setProfileData, getProfileData } = useContext(DoctorContext)
-	const { currency, backendUrl } = useContext(AppContext)
+	const navigate = useNavigate()
+
+	const { dToken, setDToken, profileData, setProfileData, getProfileData, backendUrl } = useContext(DoctorContext)
+	const { currency } = useContext(AppContext)
 
 	const [isEdit, setIsEdit] = useState(false)
+
+	const updateProfile = async () => {
+
+
+		try {
+			
+			const updateData = {
+				address: profileData.address,
+				fees: profileData.fees,
+				available: profileData.available
+			}
+
+			const {data} = await axios.post(backendUrl+"/api/doctor/update-profile", updateData, {headers: {dToken}})
+
+			if(data.success){
+				toast.success(data.message)
+				setIsEdit(false)
+				getProfileData()
+			}
+			else if(data.message.includes("Not Authorized")){
+				setDToken("")
+				localStorage.removeItem("dToken")
+				toast.warn(data.message)
+				navigate("/")
+			}
+			else{
+				toast.error(data.message)
+			}
+
+		}
+		catch (error) {
+			console.log("Error Occured while reaching the API to update the doctor data. Error : ",error)
+			toast.error(error.message)
+		}
+
+
+	}
 
 	useState(() => {
 
@@ -45,24 +87,29 @@ const DoctorProfile = () => {
 					</div>
 
 					<p className='text-gray-600 font-medium mt-4'>
-						Appointment Fees : <span className='text-gray-800'>{currency} {isEdit ? <input type="number" onChange={(e) => setProfileData() } />  : profileData.fees}</span>
+						Appointment Fees : <span className='text-gray-800'>{currency} {isEdit ? <input type="number" value={profileData.fees} onChange={(e) => setProfileData(prev => ({ ...prev, fees: e.target.value }))} /> : profileData.fees}</span>
 					</p>
 
 					<div className='flex gap-2 py-2'>
 						<p>Address:</p>
 						<p className='text-sm mt-0.5 text-gray-700'>
-							{profileData.address.line1}
+							{isEdit ? <input type="text" value={profileData.address.line1} onChange={(e) => setProfileData(prev => ({ ...prev, address: { ...prev.address, line1: e.target.value } }))} /> : profileData.address.line1}
 							<br />
-							{profileData.address.line2}
+							{isEdit ? <input type="text" value={profileData.address.line2} onChange={(e) => setProfileData(prev => ({ ...prev, address: { ...prev.address, line2: e.target.value } }))} /> : profileData.address.line2}
 						</p>
 					</div>
 
 					<div className='flex gap-1.5 pt-2'>
-						<input checked={profileData.available} type="checkbox" />
+						<input checked={profileData.available} onChange={() => isEdit && setProfileData(prev => ({ ...prev, available: !prev.available }))} type="checkbox" />
 						<label htmlFor="">Available</label>
 					</div>
 
-					<button onClick={() => setIsEdit(true)} className='px-5 py-1 border border-primary text-sm rounded-full mt-5 hover:bg-primary hover:text-white transition-all'>Edit</button>
+					{
+
+						isEdit
+							? <button onClick={updateProfile} className='px-5 py-1 border border-primary text-sm rounded-full mt-5 hover:bg-primary hover:text-white transition-all'>Save Information</button>
+							: <button onClick={() => setIsEdit(true)} className='px-5 py-1 border border-primary text-sm rounded-full mt-5 hover:bg-primary hover:text-white transition-all'>Edit Information</button>
+					}
 
 
 				</div>

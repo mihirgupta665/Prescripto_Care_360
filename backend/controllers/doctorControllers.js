@@ -307,7 +307,7 @@ const updateDoctorProfile = async (req, res) => {
         const docData = await doctorModel.findByIdAndUpdate(docId, {fees, address, available})
 
         if(docData){
-            res.json({success: true, message: "Profile Updated"})
+            res.json({success: true, message: `${docData.name} Profile Updated`})
         }
         else{
             res.json({success:false, message:"Doctor Not Found!"})
