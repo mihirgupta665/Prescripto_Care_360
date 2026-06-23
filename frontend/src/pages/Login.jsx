@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import axios from "axios"
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
 
     const { token, setToken, backendUrl } = useContext(AppContext)
 
     const navigate = useNavigate()
+    const location = useLocation()
+    const redirectTo = location.state?.from || "/"
 
     const [state, setState] = useState("Sign Up")
     const [email, setEmail] = useState("")
@@ -58,10 +60,10 @@ const Login = () => {
     useEffect(() => {
 
         if(token){
-            navigate("/")
+            navigate(redirectTo, { replace: true })
         }
 
-    }, [token])
+    }, [token, redirectTo, navigate])
 
     return (
         <form onSubmit={onSubmitHandler} className="min-h-[80vh] flex items-center">

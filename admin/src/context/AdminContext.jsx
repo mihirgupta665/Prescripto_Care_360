@@ -8,6 +8,10 @@ export const AdminContext = createContext()
 const AdminContextProvider = (props) => {
 
     const navigate = useNavigate()
+    const redirectToLogin = () => {
+        const from = window.location.pathname + window.location.search
+        navigate("/login", { state: { from } })
+    }
 
     const [aToken, setAToken] = useState(localStorage.getItem('aToken') ? localStorage.getItem('aToken') : "")
     const [doctors, setDoctors] = useState([])
@@ -92,7 +96,7 @@ const AdminContextProvider = (props) => {
                 toast.warn(data.message)
                 localStorage.removeItem("aToken")
                 setAToken("")
-                navigate("/login")
+                redirectToLogin()
             }
             else{
                 toast.error(data.message)
@@ -120,7 +124,7 @@ const AdminContextProvider = (props) => {
                 toast.warn(data.message)
                 localStorage.removeItem("aToken")
                 setAToken("")
-                navigate("/login")
+                redirectToLogin()
             }
             else{
                 toast.error(data.message)

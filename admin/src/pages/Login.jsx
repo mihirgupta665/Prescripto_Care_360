@@ -3,14 +3,16 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import { AdminContext } from "../context/AdminContext"
 import { DoctorContext } from "../context/DoctorContext"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 const Login = () => {
 
     const navigate = useNavigate()
+    const location = useLocation()
 
     const {setAToken, backendUrl} = useContext(AdminContext)
     const {setDToken} = useContext(DoctorContext)
+    const redirectTo = location.state?.from || (location.pathname !== "/login" ? location.pathname : "")
 
 
     const [state, setState] = useState("Admin")
@@ -31,7 +33,7 @@ const Login = () => {
                     localStorage.setItem("aToken", data.token)
                     setAToken(data.token); 
                     toast.success("Admin login successful \nWelcome onboard!")
-                    navigate("/admin-dashboard")
+                    navigate(redirectTo || "/admin-dashboard", { replace: true })
                 }
                 else{
                     toast.error(data.message)
@@ -47,7 +49,7 @@ const Login = () => {
                     localStorage.setItem("dToken", data.token)
                     setDToken(data.token)
                     toast.success("Doctor login successful \nWelcome onboard!")
-                    navigate("/doctor-dashboard")
+                    navigate(redirectTo || "/doctor-dashboard", { replace: true })
                 }
                 else{
                     toast.error(data.message)

@@ -45,7 +45,7 @@ const MyAppointments = () => {
             getUserAppointments()
         }
         else {
-            navigate("/login")
+            navigate("/login", { state: { from: "/my-appointments" } })
         }
 
     }, [token])
@@ -74,7 +74,7 @@ const MyAppointments = () => {
             else {
 
                 toast.warn("Unauthorized! Login Again!!")
-                navigate("/login")
+                navigate("/login", { state: { from: "/my-appointments" } })
 
             }
         }
@@ -154,7 +154,7 @@ const MyAppointments = () => {
             }
             else {
                 toast.warn("Unauthorized to make Payment! Kindly Login Again!")
-                navigate("/login")
+                navigate("/login", { state: { from: "/my-appointments" } })
             }
 
         }

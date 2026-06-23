@@ -84,7 +84,7 @@ const PanelHome = () => {
                     <div>
                         <p className='text-sm font-semibold text-primary'>{isAdmin ? 'Prescripto360Care Admin' : 'Prescripto360Care Doctor'}</p>
                         <h1 className='mt-3 max-w-3xl text-2xl font-semibold leading-tight text-slate-900 sm:text-3xl'>
-                            {isAdmin ? 'Manage patient care with a clearer operational view.' : 'Stay focused on appointments, profile readiness, and weekly practice growth.'}
+                            {isAdmin ? 'Manage patient care with a clearer operational view.' : 'Stay focused on appointments, profile readiness, and weekly growth.'}
                         </h1>
                         <p className='mt-4 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base'>
                             {isAdmin

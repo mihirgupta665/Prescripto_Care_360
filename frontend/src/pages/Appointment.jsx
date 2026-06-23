@@ -111,7 +111,7 @@ const Appointment = () => {
 
         if (!token) {
             toast.warn("Login required to book the Appointment")
-            return navigate("/login")
+            return navigate("/login", { state: { from: `/appointment/${docId}` } })
         }
 
         try {

@@ -8,6 +8,10 @@ export const DoctorContext = createContext()
 const DoctorContextProvider = (props) => {
 
     const navigate = useNavigate()
+    const redirectToLogin = () => {
+        const from = window.location.pathname + window.location.search
+        navigate("/login", { state: { from } })
+    }
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -49,7 +53,7 @@ const DoctorContextProvider = (props) => {
             }
             else if (data.message.includes("Not Authorized")) {
                 toast.warn(data.message)
-                navigate("/")
+                redirectToLogin()
             }
             else {
                 toast.error(data.message)
@@ -75,7 +79,7 @@ const DoctorContextProvider = (props) => {
             }
             else if (data.message.includes("Not Authorized")) {
                 toast.warn(data.message)
-                navigate("/")
+                redirectToLogin()
             }
             else {
                 toast.error(data.message)
@@ -102,7 +106,7 @@ const DoctorContextProvider = (props) => {
                 setDToken("")
                 localStorage.removeItem("dToken")
                 toast.warn(data.message)
-                navigate("/")
+                redirectToLogin()
             }
             else{
                 toast.error(data.message)
@@ -131,7 +135,7 @@ const DoctorContextProvider = (props) => {
                 setDToken("")
                 localStorage.removeItem("dToken")
                 toast.warn(data.message)
-                navigate("/")
+                redirectToLogin()
             }
             else{
                 toast.error(data.message)
