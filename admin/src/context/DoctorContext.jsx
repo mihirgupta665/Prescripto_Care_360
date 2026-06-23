@@ -1,11 +1,14 @@
 import { useContext, createContext, useState } from "react";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 
 export const DoctorContext = createContext()
 
 const DoctorContextProvider = (props) => {
+
+    const navigate = useNavigate()
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -15,39 +18,96 @@ const DoctorContextProvider = (props) => {
     const getAppointments = async () => {
 
         try {
-            
-            const { data } = await axios.get(backendUrl +"/api/doctor/appointments", {headers:{dToken}})
 
-            if(data.success){
+            const { data } = await axios.get(backendUrl + "/api/doctor/appointments", { headers: { dToken } })
+
+            if (data.success) {
                 setAppointments(data.appointments.reverse())
                 console.log(data.appointments)
             }
-            else{
+            else {
                 toast.error(data.message)
             }
 
         }
         catch (error) {
-            console.log("Error Occured while reaching to the API to get all the appointments of the doctor. Error : ",error)
+            console.log("Error Occured while reaching to the API to get all the appointments of the doctor. Error : ", error)
             toast.error(error.message)
         }
 
     }
 
 
-    const value={
+    const completeAppointment = async (appointmentId) => {
+
+        try {
+
+            const { data } = await axios.post(backendUrl + "/api/doctor/complete-appointment", { appointmentId }, { headers: { dToken } })
+
+            if (data.success) {
+                toast.success(data.message)
+                getAppointments()
+            }
+            else if (data.message.includes("Not Authorized")) {
+                toast.warn(data.message)
+                navigate("/")
+            }
+            else {
+                toast.error(data.message)
+            }
+
+        }
+        catch (error){
+            console.log("Error occured while reaching the API to complete the Appointment. Error : ",error)
+            toast.error(error.message)
+        }
+        
+    }
+
+
+    const cancelAppointment = async (appointmentId) => {
+
+        try {
+
+            const { data } = await axios.post(backendUrl + "/api/doctor/cancel-appointment", { appointmentId }, { headers: { dToken } })
+
+            if (data.success) {
+                toast.success(data.message)
+                getAppointments()
+            }
+            else if (data.message.includes("Not Authorized")) {
+                toast.warn(data.message)
+                navigate("/")
+            }
+            else {
+                toast.error(data.message)
+            }
+
+        }
+        catch (error){
+            console.log("Error occured while reaching the API to cancel the Appointment. Error : ",error)
+            toast.error(error.message)
+        }
+        
+    }
+
+
+    const value = {
         dToken, setDToken,
         backendUrl,
         appointments, setAppointments,
         getAppointments,
+        completeAppointment,
+        cancelAppointment,
         
+
     }
 
-    return(
+    return (
         <DoctorContext.Provider value={value}>
             {props.children}
         </DoctorContext.Provider>
-        
+
     )
 
 }

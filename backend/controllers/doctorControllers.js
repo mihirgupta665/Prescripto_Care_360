@@ -100,19 +100,19 @@ const appointmentComplete = async (req, res) => {
 
         const { docId, appointmentId } = req.body
 
-        const appointmentData = appointmentModel.findById(appointmentId)
+        const appointmentData = await appointmentModel.findById(appointmentId)
 
         if (appointmentData && appointmentData.docId === docId) {
 
             await appointmentModel.findByIdAndUpdate(appointmentId, { isCompleted: true })
-            return res.json({ success: true, message: "Appointment Successfully Completed!!" })
+            return res.json({ success: true, message: `Appointment Successfull with ${appointmentData.userData.name}` })
 
         }
-        else if (!appointmentData) {
-            return res.json({ success: false, message: "Appointment Does not Exists" })
+        else if (appointmentData && appointmentData.docId !== docId) {
+            return res.json({ success: false, message: "Not Authorized to complete! \nLogin Again!!" })
         }
         else {
-            return res.json({ success: false, message: "Not Authorized to cancel" })
+            return res.json({ success: false, message: "Appointment Does not Exists" })
         }
 
     }
@@ -155,11 +155,11 @@ const appointmentCancel = async (req, res) => {
             }
 
         }
-        else if (!appointmentData) {
-            return res.json({ success: false, message: "Appointment Does not Exists" })
+        else if (appointmentData && appointmentData.docId !== docId){
+            return res.json({ success: false, message: "Not Authorized to cancel! \nLogin Again!!" })
         }
-        else {
-            return res.json({ success: false, message: "Not Authorized to cancel" })
+        else{
+            return res.json({ success: false, message: "Appointment Does not Exists" })
         }
 
     }
@@ -168,6 +168,22 @@ const appointmentCancel = async (req, res) => {
         console.log("Error Occured during cancelling the appointment from doctor database. Error : ",error)
         res.json({success:false, message:error.message})
 
+    }
+
+}
+
+
+// API to get dashboard data for doctor panel
+const doctorDashboard = async (req, res) => {
+
+    try {
+        
+        
+
+    }
+    
+    catch (error) {
+        
     }
 
 }
