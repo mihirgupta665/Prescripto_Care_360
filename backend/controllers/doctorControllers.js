@@ -77,22 +77,83 @@ const appointmentsDoctor = async (req, res) => {
 
     try {
 
-        if(docId){
+        if (docId) {
             const appointments = await appointmentModel.find({ docId })
-            res.json({success:true, appointments})
+            res.json({ success: true, appointments })
         }
-        else{
-            res.json({success:false, message:"Doctor Not found!"})
+        else {
+            res.json({ success: false, message: "Doctor Not found!" })
         }
 
     }
     catch (error) {
-        console.log("Error Occured during fetching all the appointments of the doctor from the database. Error : ",error)
-        res.json({success:false, message:error.message})
+        console.log("Error Occured during fetching all the appointments of the doctor from the database. Error : ", error)
+        res.json({ success: false, message: error.message })
     }
 
+}
+
+// API to mark the Appointment Complete for the doctor panel
+const appointmentComplete = async () => {
+
+    try {
+
+        const { docId, appointmentId } = req.body
+
+        const appointmentData = appointmentModel.findById(appointmentId)
+
+        if (appointmentData && appointmentData.docId == docId) {
+
+            await appointmentModel.findByIdAndUpdate(appointmentId, { isCompleted: true })
+            return res.json({ success: true, message: "Appointment Successfully Completed!!" })
+
+        }
+        else if (!appointmentData) {
+            return res.json({ success: false, message: "Appointment Does not Exists" })
+        }
+        else {
+            return res.json({ success: false, message: "Not Authorized to cancel" })
+        }
+
+    }
+    catch (error) {
+        console.log("Error occured during marking the appointment as true in the database. Error : ", error)
+        res.json({ success: false, message: error.message })
+    }
 
 }
+
+
+// API to mark the Appointment Cancel for the doctor panel
+const appointmentCancel = async () => {
+
+    try {
+
+        const { docId, appointmentId } = req.body
+
+        const appointmentData = await appointmentModel.findById(appointmentId)
+
+        if (appointmentData && appointmentData.docId === docId) {
+
+            await appointmentModel.findByIdAndUpdate(appointmentId, {cancelled: true})
+
+            let docData = await doctorModel.findById(docId)
+
+            docData.slots_booked = docData.slots_booked
+            docData.slots_booked[appointmentData.slotDate] = docData.slots_booked[appointmentData.slotDate].filter((slotTime) => slotTime != appointmentData.slotTime)
+            await doctorModel.findByIdAndUpdate(docId, { slots_booked })
+
+            res.json({ success: true, message: `Appointment Cancel with ${appointmentData.userData.name}` })
+
+        }
+
+    }
+    catch (error) {
+
+    }
+
+}
+
 
 
 
