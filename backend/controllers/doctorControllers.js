@@ -94,7 +94,7 @@ const appointmentsDoctor = async (req, res) => {
 }
 
 // API to mark the Appointment Complete for the doctor panel
-const appointmentComplete = async () => {
+const appointmentComplete = async (req, res) => {
 
     try {
 
@@ -125,7 +125,7 @@ const appointmentComplete = async () => {
 
 
 // API to mark the Appointment Cancel for the doctor panel
-const appointmentCancel = async () => {
+const appointmentCancel = async (req, res) => {
 
     try {
 
@@ -141,8 +141,8 @@ const appointmentCancel = async () => {
 
             if (docData.slots_booked && docData.slots_booked[appointmentData.slotDate]){
 
-                docData.slots_booked = docData.slots_booked
-                docData.slots_booked[appointmentData.slotDate] = docData.slots_booked[appointmentData.slotDate].filter((slotTime) => slotTime != appointmentData.slotTime)
+                let slots_booked = docData.slots_booked
+                slots_booked[appointmentData.slotDate] = docData.slots_booked[appointmentData.slotDate].filter((slotTime) => slotTime != appointmentData.slotTime)
                 await doctorModel.findByIdAndUpdate(docId, { slots_booked })
                 
                 res.json({ success: true, message: `Appointment Cancel with ${appointmentData.userData.name}` })
@@ -177,4 +177,4 @@ const appointmentCancel = async () => {
 
 
 
-export { changeAvailability, doctorList, loginDoctor, appointmentsDoctor }
+export { changeAvailability, doctorList, loginDoctor, appointmentsDoctor, appointmentComplete, appointmentCancel }
