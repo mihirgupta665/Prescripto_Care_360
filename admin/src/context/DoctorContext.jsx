@@ -14,6 +14,7 @@ const DoctorContextProvider = (props) => {
 
     const [dToken, setDToken] = useState(localStorage.getItem("dToken") ? localStorage.getItem("dToken") : "")
     const [appointments, setAppointments] = useState([])
+    const [dashData, setDashData] = useState(false)
 
     const getAppointments = async () => {
 
@@ -92,6 +93,36 @@ const DoctorContextProvider = (props) => {
     }
 
 
+    const getDashData = async () => {
+
+        try {
+         
+            const {data} = axios.get(backendUrl+"/api/doctor/dashboard", {headers: {dToken}})
+
+            if(data.success){
+                setDashData(data.dashData)
+            }
+            else if(data.message.includes("Not Authorized")){
+                setDToken(" ")
+                localStorage.removeItem(dToken)
+                toast.warn(data.message)
+                navigate("/")
+            }
+            else{
+                toast.error(data.message)
+            }
+
+        }
+        catch (error) {
+            
+            console.log("Error occured while reaching to the API to get the data for the dashboard data. Error : ",error)
+            toast.error(error.message)
+
+        }
+
+    }
+
+
     const value = {
         dToken, setDToken,
         backendUrl,
@@ -99,6 +130,9 @@ const DoctorContextProvider = (props) => {
         getAppointments,
         completeAppointment,
         cancelAppointment,
+        dashData, setDashData,
+        getDashData,
+        
         
 
     }

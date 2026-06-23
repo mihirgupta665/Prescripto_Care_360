@@ -216,6 +216,9 @@ const doctorDashboard = async (req, res) => {
     
     catch (error) {
         
+        console.log("Error Occured while fetching the data from dashboard to form the the dashboard data of doctor. Error : ", error)
+        res.json({success:false, message:error.message})
+        
     }
 
 }
