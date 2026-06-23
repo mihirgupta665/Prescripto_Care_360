@@ -29,7 +29,6 @@ const AppContextProvider = (props) => {
 
         }
         catch (error) {
-            console.log("Error Occured while reaching to the api : ", error)
             toast.error(error.message)
         }
 
@@ -49,13 +48,12 @@ const AppContextProvider = (props) => {
                 setUserData(data.userData)
             }
             else {
-                toast.error(error.message)
+                toast.error(data.message)
             }
 
 
         }
         catch (error) {
-            console.log("Error Occured during while calling the get-profile api", error)
             toast.error(error.message)
         }
     }

@@ -27,7 +27,7 @@ const Login = () => {
                 if(data.success){
                     setToken(data.token)
                     localStorage.setItem("token",data.token)
-                    toast.success(`User has been Register Succefully! \nWelcome Onboard ${name}`)
+                    toast.success(`Account created successfully! \nWelcome onboard ${name}`)
                 }
                 else{
                     toast.error(data.message)
@@ -40,7 +40,7 @@ const Login = () => {
                 if(data.success){
                     setToken(data.token)
                     localStorage.setItem("token", data.token)
-                    toast.success("Welcome \nLogin Successfull")
+                    toast.success("Welcome \nLogin successful")
                 }
                 else{
                     toast.error(data.message)
@@ -50,7 +50,6 @@ const Login = () => {
 
         }
         catch (error) {
-            console.log("Error Occured while submiting form", error)
             toast.error(error.message)
         }
 

@@ -52,7 +52,7 @@ const Dashboard = () => {
                 <div className='flex flex-1 items-center justify-center gap-5 bg-white p-4 min-w-64 min-h-32 rounded-xl border border-gray-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all' >
                     <img className='w-14' src={assets.doctor_icon} alt="" />
                     <div>
-                        <p className="text-xl text-semibold text-gray-700">{dashData.doctors}</p>
+                        <p className="text-xl font-semibold text-gray-700">{dashData.doctors}</p>
                         <p className='text-gray-500'>Doctors</p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ const Dashboard = () => {
                 <div className='flex flex-1 items-center justify-center gap-5 bg-white p-4 min-w-64 min-h-32 rounded-xl border border-gray-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all'>
                     <img className='w-14' src={assets.appointments_icon} alt="" />
                     <div>
-                        <p className="text-xl text-semibold text-gray-700">{dashData.appointments}</p>
+                        <p className="text-xl font-semibold text-gray-700">{dashData.appointments}</p>
                         <p className='text-gray-500'>Appointments</p>
                     </div>
                 </div>
@@ -68,7 +68,7 @@ const Dashboard = () => {
                 <div className='flex flex-1 items-center justify-center gap-5 bg-white p-4 min-w-64 min-h-32 rounded-xl border border-gray-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md transition-all'>
                     <img className='w-14' src={assets.patients_icon} alt="" />
                     <div>
-                        <p className="text-xl text-semibold text-gray-700">{dashData.patients}</p>
+                        <p className="text-xl font-semibold text-gray-700">{dashData.patients}</p>
                         <p className='text-gray-500'>Patients</p>
                     </div>
                 </div>

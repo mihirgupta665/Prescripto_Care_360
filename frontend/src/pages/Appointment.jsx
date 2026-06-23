@@ -138,7 +138,6 @@ const Appointment = () => {
 
         }
         catch (error) {
-            console.log("Error occured while reaching to the api : ", error)
             toast.error(error.message)
         }
 

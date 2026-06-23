@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react"
-import { assets } from "../assets/assets"
 import axios from "axios" 
 import { toast } from "react-toastify"
 import { AdminContext } from "../context/AdminContext"
@@ -31,7 +30,7 @@ const Login = () => {
                 if(data.success) {
                     localStorage.setItem("aToken", data.token)
                     setAToken(data.token); 
-                    toast.success("Admin Login Successfull \nWelcome Onboard!")
+                    toast.success("Admin login successful \nWelcome onboard!")
                     navigate("/admin-dashboard")
                 }
                 else{
@@ -47,8 +46,7 @@ const Login = () => {
                 if(data.success){
                     localStorage.setItem("dToken", data.token)
                     setDToken(data.token)
-                    toast.success("Doctor Login Successfull \nWelcome Onboard!")
-                    console.log(data.token)
+                    toast.success("Doctor login successful \nWelcome onboard!")
                     navigate("/doctor-dashboard")
                 }
                 else{
@@ -59,7 +57,6 @@ const Login = () => {
 
         }
         catch(error){
-            console.log("Error Occured while reaching the API for the login. Error : ", error)
             toast.error(error.message)
         }
     }

@@ -42,11 +42,6 @@ const AddDoctor = () => {
             formData.append("degree", degree)
             formData.append("address", JSON.stringify({line1:address1, line2:address2}))
 
-            // console.log formdata
-            formData.forEach((value, key) => {
-                console.log(`${key} : ${value}`);
-            })
-
             const {data} = await axios.post(backendUrl + "/api/admin/add-doctor", formData, { headers : { atoken: aToken } })
 
             if(data.success) {
@@ -70,7 +65,6 @@ const AddDoctor = () => {
         }
         catch(error){
             toast.error(error.message)
-            console.log("error Occured while hitting the add-doctor end point", error)
         }
     }  
 
@@ -78,7 +72,7 @@ const AddDoctor = () => {
     return (
         <form onSubmit={onSubmitHandler} className='m-5 w-full'>
 
-            <p className='mb-3 text-lg font-meidum'>Add Doctor</p>
+            <p className='mb-3 text-lg font-medium'>Add Doctor</p>
 
             <div  className='bg-white pt-3 pb-8 px-8 border rounded w-full max-w-4xl max-h-[82vh] overflow-y-scroll'>
                 <div className='flex items-center gap-4 mb-8 text-gray-500'>

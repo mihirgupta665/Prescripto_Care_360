@@ -10,6 +10,8 @@ import Dashboard from "./pages/Admin/Dashboard"
 import AllAppointments from "./pages/Admin/AllAppointments"
 import AddDoctor from "./pages/Admin/AddDoctor"
 import DoctorsList from "./pages/Admin/DoctorsList"
+import PanelHome from "./pages/PanelHome"
+import NotFound from "./pages/NotFound"
 import { DoctorContext } from "./context/DoctorContext"
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard"
 import DoctorAppointments from "./pages/Doctor/DoctorAppointments"
@@ -30,7 +32,7 @@ const App = () => {
                 <Routes>
 
                     {/* Admin Routes */}
-                    <Route path="/" element={<></>} />
+                    <Route path="/" element={<PanelHome />} />
                     <Route path="/admin-dashboard" element={<Dashboard />} />
                     <Route path="/all-appointments" element={<AllAppointments />} />
                     <Route path="/add-doctor" element={<AddDoctor />} />
@@ -40,6 +42,7 @@ const App = () => {
                     <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
                     <Route path="/doctor-appointments" element={<DoctorAppointments />} />
                     <Route path="/doctor-profile" element={<DoctorProfile />} />
+                    <Route path="*" element={<NotFound />} />
                     
                 </Routes>
             </div>

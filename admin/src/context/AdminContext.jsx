@@ -22,7 +22,6 @@ const AdminContextProvider = (props) => {
             const {data} = await axios.post(backendUrl+ "/api/admin/all-doctors", {}, {headers: {aToken}})
             if (data.success) {
                 setDoctors(data.doctors)
-                console.log("All doctors from admin context : ",data.doctors)
             }
             else {
                 toast.error(data.message)
@@ -73,7 +72,6 @@ const AdminContextProvider = (props) => {
 
         }
         catch (error) {
-            console.log("Error Occured while reaching to to API for getting all appointments. Error : ",error)
             toast.error(error.message)
         }
 
@@ -104,7 +102,7 @@ const AdminContextProvider = (props) => {
 
         }
         catch (error) {
-            
+            toast.error(error.message)
         }
 
     }
@@ -117,7 +115,6 @@ const AdminContextProvider = (props) => {
 
             if(data.success){
                 setDashData(data.dashData)
-                console.log(data.dashData)
             }
             else if(!data.success && data.message?.includes("Not Authorized")){
                 toast.warn(data.message)
@@ -131,7 +128,6 @@ const AdminContextProvider = (props) => {
 
         }
         catch (error) {
-            console.log("Error Occured while reaching the API to get all the dashboard data. Error : ",error)
             toast.error(error.message)
         }
 

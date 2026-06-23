@@ -30,12 +30,10 @@ const MyAppointments = () => {
 
             if (data.success) {
                 setAppointments(data.appointments.reverse())
-                console.log(data.appointments)
             }
 
         }
         catch (error) {
-            console.log("Error Occured while reaching to the api to get the appointments. \nError : ", error)
             toast.error(error.message)
         }
 
@@ -47,7 +45,7 @@ const MyAppointments = () => {
             getUserAppointments()
         }
         else {
-            navigate(backendUrl + "/login")
+            navigate("/login")
         }
 
     }, [token])
@@ -82,7 +80,6 @@ const MyAppointments = () => {
         }
         catch (error) {
 
-            console.log("Error Occured while reaching to the API to cancel the Appointment. Error : ", error)
             toast.error(error.message)
 
         }
@@ -125,7 +122,6 @@ const MyAppointments = () => {
                 }
                 catch (error) {
                     
-                    console.log("Error Occured while reaching the API for verification of payment. Error : ",error)
                     toast.error(error.message)
 
                 }
@@ -163,7 +159,7 @@ const MyAppointments = () => {
 
         }
         catch (error) {
-
+            toast.error(error.message)
         }
 
 

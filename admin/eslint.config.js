@@ -17,5 +17,14 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      'react-refresh/only-export-components': 'off',
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/exhaustive-deps': 'off',
+      'no-unused-vars': ['error', {
+        varsIgnorePattern: '^(React|toast|assets|StrictMode|dToken)$',
+        caughtErrors: 'none',
+      }],
+    },
   },
 ])

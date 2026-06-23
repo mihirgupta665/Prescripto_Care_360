@@ -1,4 +1,4 @@
-import { useContext, createContext, useState } from "react";
+import { createContext, useState } from "react";
 import { toast } from "react-toastify"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
@@ -24,7 +24,6 @@ const DoctorContextProvider = (props) => {
 
             if (data.success) {
                 setAppointments(data.appointments.reverse())
-                console.log(data.appointments)
             }
             else {
                 toast.error(data.message)
@@ -32,7 +31,6 @@ const DoctorContextProvider = (props) => {
 
         }
         catch (error) {
-            console.log("Error Occured while reaching to the API to get all the appointments of the doctor. Error : ", error)
             toast.error(error.message)
         }
 
@@ -59,7 +57,6 @@ const DoctorContextProvider = (props) => {
 
         }
         catch (error){
-            console.log("Error occured while reaching the API to complete the Appointment. Error : ",error)
             toast.error(error.message)
         }
         
@@ -86,7 +83,6 @@ const DoctorContextProvider = (props) => {
 
         }
         catch (error){
-            console.log("Error occured while reaching the API to cancel the Appointment. Error : ",error)
             toast.error(error.message)
         }
         
@@ -101,11 +97,10 @@ const DoctorContextProvider = (props) => {
 
             if(data.success){
                 setDashData(data.dashData)
-                console.log(data.dashData)
             }
             else if(data.message.includes("Not Authorized")){
-                setDToken(" ")
-                localStorage.removeItem(dToken)
+                setDToken("")
+                localStorage.removeItem("dToken")
                 toast.warn(data.message)
                 navigate("/")
             }
@@ -116,7 +111,6 @@ const DoctorContextProvider = (props) => {
         }
         catch (error) {
             
-            console.log("Error occured while reaching to the API to get the data for the dashboard data. Error : ",error)
             toast.error(error.message)
 
         }
@@ -132,10 +126,9 @@ const DoctorContextProvider = (props) => {
 
             if(data.success){
                 setProfileData(data.profileData)
-                console.log(data.profileData)
             }
             else if(data.message.includes("Not Authorized")){
-                setDToken(" ")
+                setDToken("")
                 localStorage.removeItem("dToken")
                 toast.warn(data.message)
                 navigate("/")
@@ -146,7 +139,6 @@ const DoctorContextProvider = (props) => {
 
         }
         catch (error) {
-            console.log("Error occured while reaching the API to get the doctor profile data. Error : ",error)   
             toast.error(error.message)
         }
 
