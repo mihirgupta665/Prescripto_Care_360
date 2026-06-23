@@ -102,7 +102,7 @@ const appointmentComplete = async () => {
 
         const appointmentData = appointmentModel.findById(appointmentId)
 
-        if (appointmentData && appointmentData.docId == docId) {
+        if (appointmentData && appointmentData.docId === docId) {
 
             await appointmentModel.findByIdAndUpdate(appointmentId, { isCompleted: true })
             return res.json({ success: true, message: "Appointment Successfully Completed!!" })
@@ -117,7 +117,7 @@ const appointmentComplete = async () => {
 
     }
     catch (error) {
-        console.log("Error occured during marking the appointment as true in the database. Error : ", error)
+        console.log("Error occured during completing the appointment as true in the database. Error : ", error)
         res.json({ success: false, message: error.message })
     }
 
@@ -139,16 +139,34 @@ const appointmentCancel = async () => {
 
             let docData = await doctorModel.findById(docId)
 
-            docData.slots_booked = docData.slots_booked
-            docData.slots_booked[appointmentData.slotDate] = docData.slots_booked[appointmentData.slotDate].filter((slotTime) => slotTime != appointmentData.slotTime)
-            await doctorModel.findByIdAndUpdate(docId, { slots_booked })
+            if (docData.slots_booked && docData.slots_booked[appointmentData.slotDate]){
 
-            res.json({ success: true, message: `Appointment Cancel with ${appointmentData.userData.name}` })
+                docData.slots_booked = docData.slots_booked
+                docData.slots_booked[appointmentData.slotDate] = docData.slots_booked[appointmentData.slotDate].filter((slotTime) => slotTime != appointmentData.slotTime)
+                await doctorModel.findByIdAndUpdate(docId, { slots_booked })
+                
+                res.json({ success: true, message: `Appointment Cancel with ${appointmentData.userData.name}` })
 
+            }
+            else {
+                
+                res.json({ success: false, message: `Appointment does not exists at ${appointmentData.slotTime}` })
+                
+            }
+
+        }
+        else if (!appointmentData) {
+            return res.json({ success: false, message: "Appointment Does not Exists" })
+        }
+        else {
+            return res.json({ success: false, message: "Not Authorized to cancel" })
         }
 
     }
     catch (error) {
+
+        console.log("Error Occured during cancelling the appointment from doctor database. Error : ",error)
+        res.json({success:false, message:error.message})
 
     }
 
