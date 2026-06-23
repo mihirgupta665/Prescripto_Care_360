@@ -272,8 +272,61 @@ const doctorDashboard = async (req, res) => {
 }
 
 
+// API to get doctor profile for Doctor Panel
+const doctorProfile = async (req, res) => {
+
+    try {
+        
+        const {docId} = req.body
+
+        const profileData = await doctorModel.findById(docId).select("-password")
+
+        if(profileData) {
+            res.json({success:true, profileData})
+        }
+        else{
+            res.json({success:false, message:"No doctor found!!"})
+        }
+
+    }
+    catch (error) {
+        console.log("Error Ocurred furing fetching the doctor data from the database using doctor id. Error : ",error)
+        res.json({success:false, message:error.message})
+    }
+
+}
+
+
+// API's controller function to update doctor profile data from the Doctor Panel
+const updateDoctorProfile = async (req, res) => {
+
+    try {
+        
+        const {docId, fees, address, available} = req.body
+
+        const docData = await doctorModel.findByIdAndUpdate(docId, {fees, address, available})
+
+        if(docData){
+            res.json({success: true, message: "Profile Updated"})
+        }
+        else{
+            res.json({success:false, message:"Doctor Not Found!"})
+        }
+
+
+    }
+    catch (error) {
+        
+        console.log("Error occured during updating the doctor data in the doctor database. Error : ",error)
+        res.json({success:false, message:error.message})
+
+    }
+
+}
 
 
 
 
-export { changeAvailability, doctorList, loginDoctor, appointmentsDoctor, appointmentComplete, appointmentCancel, doctorDashboard }
+
+
+export { changeAvailability, doctorList, loginDoctor, appointmentsDoctor, appointmentComplete, appointmentCancel, doctorDashboard, doctorProfile,  updateDoctorProfile}
