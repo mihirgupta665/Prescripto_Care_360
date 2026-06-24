@@ -62,7 +62,7 @@ export const assets = {
 
 export const specialityData = [
     {
-        speciality: 'General physician',
+        speciality: 'General Physician',
         image: General_physician
     },
     {
@@ -225,7 +225,7 @@ export const doctors = [
         fees: 48,
         address: {
             line1: '41 Abbey Road',
-            line2: 'St John’s Wood, London'
+            line2: "St John's Wood, London"
         }
     },
     {
@@ -253,7 +253,7 @@ export const doctors = [
         fees: 62,
         address: {
             line1: '18 Tower Bridge Road',
-            line2: 'Bermondsey, London'
+            line2: '    '
         }
     },
     {

@@ -18,7 +18,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
+        <div className="sticky top-0 z-30 flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400 bg-white">
             <img onClick={() => navigate("/")  } className="w-56 h-12 object-cover object-center cursor-pointer" src={assets.logo} alt="" />
             <ul className="hidden md:flex items-start gap-5 font-medium">
                 <NavLink to="/">
@@ -46,7 +46,7 @@ const Navbar = () => {
                         <img className="w-8 rounded-full" src={userData.image} alt="" />
                         <img className="w-2" src={assets.dropdown_icon} alt="" />
                         {/* group hover makes it visible as block when its group is hovered */}
-                        <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
+                        <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-40 hidden group-hover:block">
                             <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
                                 <p onClick={() => navigate("my-profile")} className="hover:text-black cursor-pointer">My Profile</p>
                                 <p onClick={() => navigate("my-appointments")} className="hover:text-black cursor-pointer">My Appointments</p>
@@ -58,7 +58,7 @@ const Navbar = () => {
                 }
                 <img onClick={() => {setShowMenu(true)}} className="w-6 md:hidden" src={assets.menu_icon} alt="" />
                 {/* ----- Mobile Menu ----- */}
-                <div className={`${showMenu ? "fixed w-[300px] h-full" : "h-0 w-0"} md:hidden right-0 top-0  z-20 overflow-hidden bg-white transition-all`}>
+                <div className={`${showMenu ? "fixed w-[300px] h-full" : "h-0 w-0"} md:hidden right-0 top-0  z-50 overflow-hidden bg-white transition-all`}>
                     <div className="flex items-center justify-between px-5">
                         <img className="w-36" src={assets.logo} alt="" />
                         <img className="w-7" onClick={() => setShowMenu(false)} src={assets.cross_icon} alt="" />

@@ -6,6 +6,7 @@ import { AdminContext } from "./context/AdminContext"
 import Navbar from "./components/Navbar"
 import Sidebar from "./components/Sidebar"
 import { Route, Routes } from "react-router-dom"
+import ScrollToTop from "./components/ScrollToTop"
 import Dashboard from "./pages/Admin/Dashboard"
 import AllAppointments from "./pages/Admin/AllAppointments"
 import AddDoctor from "./pages/Admin/AddDoctor"
@@ -25,6 +26,7 @@ const App = () => {
     return aToken || dToken
     ? (
         <div className="bg-[#F8F9FD]">
+            <ScrollToTop />
             <ToastContainer />
             <Navbar />
             <div className="flex items-start">
@@ -51,6 +53,7 @@ const App = () => {
     ) 
     : (
         <>
+            <ScrollToTop />
             <Login />
             <ToastContainer />
         </>
