@@ -15,10 +15,11 @@ import {
     XAxis,
     YAxis
 } from 'recharts'
+import LoadingState from '../../components/LoadingState'
 
 const Dashboard = () => {
 
-    const { aToken, dashData, getDashData } = useContext(AdminContext)
+    const { aToken, dashData, dashLoading, getDashData } = useContext(AdminContext)
     const [metric, setMetric] = useState('appointments')
     const [chartType, setChartType] = useState('bar')
 
@@ -43,7 +44,19 @@ const Dashboard = () => {
 
     const formatValue = (value) => isEarnings ? `$${Number(value).toLocaleString()}` : value
 
-    return dashData && (
+    if (dashLoading || !dashData) {
+        return (
+            <div className='w-full min-w-0 p-5 md:p-7'>
+                <LoadingState
+                    title='Loading dashboard analytics'
+                    message='We’re refreshing doctor performance, patient counts, and appointment insights.'
+                    variant='cards'
+                />
+            </div>
+        )
+    }
+
+    return (
 
         <div className='w-full min-w-0 p-5 md:p-7'>
 

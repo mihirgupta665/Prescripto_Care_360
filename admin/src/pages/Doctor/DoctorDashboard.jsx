@@ -13,10 +13,11 @@ import {
     XAxis,
     YAxis
 } from 'recharts'
+import LoadingState from '../../components/LoadingState'
 
 const DoctorDashboard = () => {
 
-    const { dToken, dashData, getDashData } = useContext(DoctorContext)
+    const { dToken, dashData, dashLoading, getDashData } = useContext(DoctorContext)
     const { currency } = useContext(AppContext)
     const [chartType, setChartType] = useState('line')
     const [chartMetric, setChartMetric] = useState('earnings')
@@ -90,7 +91,19 @@ const DoctorDashboard = () => {
         </div>
     )
 
-    return dashData && (
+    if (dashLoading || !dashData) {
+        return (
+            <div className='w-full min-w-0 p-5 md:p-7'>
+                <LoadingState
+                    title='Loading doctor insights'
+                    message='We’re gathering earnings, patient reach, and weekly appointment momentum.'
+                    variant='cards'
+                />
+            </div>
+        )
+    }
+
+    return (
 
         <div className='w-full min-w-0 p-5 md:p-7'>
 

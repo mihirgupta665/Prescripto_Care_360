@@ -2,11 +2,24 @@ import React, { useContext } from "react"
 // import { doctors } from "../assets/assets"       // use it from context
 import { useNavigate } from "react-router-dom"
 import { AppContext } from "../context/AppContext"
+import LoadingState from "./LoadingState"
 
 const TopDoctors = () => {
 
     const navigate = useNavigate("")
-    const {doctors} = useContext(AppContext)
+    const { doctors, doctorsLoading } = useContext(AppContext)
+
+    if (doctorsLoading) {
+        return (
+            <div className="my-16">
+                <LoadingState
+                    title="Finding trusted doctors"
+                    message="We’re lining up available specialists and the latest availability."
+                    variant="cards"
+                />
+            </div>
+        )
+    }
 
     return(
         <div className="flex flex-col items-center gap-4 my-16 text-gray-900 md:mx-10">

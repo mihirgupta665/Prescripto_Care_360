@@ -17,10 +17,14 @@ const AdminContextProvider = (props) => {
     const [doctors, setDoctors] = useState([])
     const [appointments, setAppointments] = useState([])
     const [dashData, setDashData] = useState(false)
+    const [doctorsLoading, setDoctorsLoading] = useState(false)
+    const [appointmentsLoading, setAppointmentsLoading] = useState(false)
+    const [dashLoading, setDashLoading] = useState(false)
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL 
 
     const getAllDoctors = async () => {
+        setDoctorsLoading(true)
 
         try{
             const {data} = await axios.post(backendUrl+ "/api/admin/all-doctors", {}, {headers: {aToken}})
@@ -33,6 +37,9 @@ const AdminContextProvider = (props) => {
         }
         catch(error) {
             toast.error(error.message)
+        }
+        finally {
+            setDoctorsLoading(false)
         }
 
     }
@@ -58,6 +65,7 @@ const AdminContextProvider = (props) => {
     } 
 
     const getAllAppointments = async () => {
+        setAppointmentsLoading(true)
 
         try {
             
@@ -77,6 +85,9 @@ const AdminContextProvider = (props) => {
         }
         catch (error) {
             toast.error(error.message)
+        }
+        finally {
+            setAppointmentsLoading(false)
         }
 
     }
@@ -112,6 +123,7 @@ const AdminContextProvider = (props) => {
     }
 
     const getDashData = async () => {
+        setDashLoading(true)
 
         try {
             
@@ -134,6 +146,9 @@ const AdminContextProvider = (props) => {
         catch (error) {
             toast.error(error.message)
         }
+        finally {
+            setDashLoading(false)
+        }
 
     }
 
@@ -142,11 +157,14 @@ const AdminContextProvider = (props) => {
         aToken, setAToken,
         backendUrl,
         doctors, getAllDoctors,
+        doctorsLoading,
         changeAvailability,
         appointments, setAppointments,
+        appointmentsLoading,
         getAllAppointments, 
         cancelAppointment,
         dashData,
+        dashLoading,
         getDashData, 
 
     }

@@ -4,10 +4,11 @@ import { AppContext } from "../context/AppContext"
 import { assets } from "../assets/assets"
 import axios from "axios"
 import { toast } from "react-toastify"
+import LoadingState from "../components/LoadingState"
 
 const MyProfile = () => {
 
-    const { userData, setUserData, token, backendUrl, loadUserProfileData } = useContext(AppContext)
+    const { userData, setUserData, token, backendUrl, loadUserProfileData, userDataLoading } = useContext(AppContext)
 
     const [isEdit, setIsEdit] = useState(false)
     const [image, setImage] = useState(false)
@@ -47,8 +48,15 @@ const MyProfile = () => {
 
     }
 
-    if (!userData) {
-        return <p>Loading profile...</p>
+    if (userDataLoading || !userData) {
+        return (
+            <LoadingState
+                title="Loading your profile"
+                message="We’re bringing in your personal details, contact info, and preferences."
+                variant="profile"
+                className="mt-4"
+            />
+        )
     }
 
     return (

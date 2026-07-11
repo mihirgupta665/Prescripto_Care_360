@@ -19,8 +19,12 @@ const DoctorContextProvider = (props) => {
     const [appointments, setAppointments] = useState([])
     const [dashData, setDashData] = useState(false)
     const [profileData, setProfileData] = useState(false)
+    const [appointmentsLoading, setAppointmentsLoading] = useState(false)
+    const [dashLoading, setDashLoading] = useState(false)
+    const [profileLoading, setProfileLoading] = useState(false)
 
     const getAppointments = async () => {
+        setAppointmentsLoading(true)
 
         try {
 
@@ -36,6 +40,9 @@ const DoctorContextProvider = (props) => {
         }
         catch (error) {
             toast.error(error.message)
+        }
+        finally {
+            setAppointmentsLoading(false)
         }
 
     }
@@ -94,6 +101,7 @@ const DoctorContextProvider = (props) => {
 
 
     const getDashData = async () => {
+        setDashLoading(true)
 
         try {
          
@@ -118,11 +126,15 @@ const DoctorContextProvider = (props) => {
             toast.error(error.message)
 
         }
+        finally {
+            setDashLoading(false)
+        }
 
     }
 
 
     const getProfileData = async () => {
+        setProfileLoading(true)
 
         try {
             
@@ -145,6 +157,9 @@ const DoctorContextProvider = (props) => {
         catch (error) {
             toast.error(error.message)
         }
+        finally {
+            setProfileLoading(false)
+        }
 
 
     }
@@ -154,12 +169,15 @@ const DoctorContextProvider = (props) => {
         dToken, setDToken,
         backendUrl,
         appointments, setAppointments,
+        appointmentsLoading,
         getAppointments,
         completeAppointment,
         cancelAppointment,
         dashData, setDashData,
+        dashLoading,
         getDashData,
         profileData, setProfileData,
+        profileLoading,
         getProfileData,
         
 

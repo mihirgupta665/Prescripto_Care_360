@@ -5,6 +5,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import LoadingState from "../components/LoadingState"
 
 const MyAppointments = () => {
 
@@ -12,6 +13,7 @@ const MyAppointments = () => {
     const navigate = useNavigate()
 
     const [appointments, setAppointments] = useState([])
+    const [appointmentsLoading, setAppointmentsLoading] = useState(true)
     const month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
 
     const slotDateFormat = (slotDate) => {
@@ -23,6 +25,7 @@ const MyAppointments = () => {
     }
 
     const getUserAppointments = async () => {
+        setAppointmentsLoading(true)
 
         try {
 
@@ -36,6 +39,9 @@ const MyAppointments = () => {
         catch (error) {
             toast.error(error.message)
         }
+        finally {
+            setAppointmentsLoading(false)
+        }
 
     }
 
@@ -45,6 +51,7 @@ const MyAppointments = () => {
             getUserAppointments()
         }
         else {
+            setAppointmentsLoading(false)
             navigate("/login", { state: { from: "/my-appointments" } })
         }
 
@@ -168,6 +175,14 @@ const MyAppointments = () => {
     return (
         <div>
             <p className="pb-3 mt-12 font-medium text-zinc-700 border-b">My Appointments</p>
+            {appointmentsLoading ? (
+                <LoadingState
+                    title="Loading your appointments"
+                    message="We’re checking upcoming visits, payment status, and recent updates."
+                    variant="list"
+                    className="mt-6"
+                />
+            ) : (
             <div >
                 {
                     appointments.map((item, index) => (
@@ -195,6 +210,7 @@ const MyAppointments = () => {
                     ))
                 }
             </div>
+            )}
         </div>
     )
 }

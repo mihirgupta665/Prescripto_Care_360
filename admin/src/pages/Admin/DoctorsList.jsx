@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react'
 import { AdminContext } from '../../context/AdminContext'
+import LoadingState from '../../components/LoadingState'
 
 function DoctorsList() {
 
-    const { aToken, doctors, getAllDoctors, changeAvailability } = useContext(AdminContext)
+    const { aToken, doctors, doctorsLoading, getAllDoctors, changeAvailability } = useContext(AdminContext)
 
     useEffect(() => {
         if (aToken) {
@@ -14,6 +15,14 @@ function DoctorsList() {
     return (
         <div className='w-full min-w-0 max-h-[90vh] overflow-y-scroll px-4 py-5 sm:px-6'>
             <h1 className='text-lg font-medium'>All Doctors</h1>
+            {doctorsLoading ? (
+                <LoadingState
+                    title='Loading doctor directory'
+                    message='We’re syncing doctor cards, specialties, and current availability.'
+                    variant='cards'
+                    className='mt-5'
+                />
+            ) : (
             <div className='grid w-full grid-cols-1 gap-5 pt-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
                 {
                     doctors.map((item, index) => (
@@ -33,6 +42,7 @@ function DoctorsList() {
                     ))
                 }
             </div>
+            )}
 
         </div>
     )

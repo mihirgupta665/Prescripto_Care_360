@@ -5,11 +5,12 @@ import { assets } from "../assets/assets"
 import RelatedDoctors from "../components/RelatedDoctors"
 import { toast } from "react-toastify"
 import axios from "axios"
+import LoadingState from "../components/LoadingState"
 
 const Appointment = () => {
 
     const { docId } = useParams()
-    const { doctors, currencySymbol, backendUrl, token, getDoctorsData } = useContext(AppContext)
+    const { doctors, doctorsLoading, currencySymbol, backendUrl, token, getDoctorsData } = useContext(AppContext)
     const navigate = useNavigate()
 
     const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
@@ -143,7 +144,18 @@ const Appointment = () => {
 
     }
 
-    return docInfo && (
+    if (doctorsLoading || !docInfo) {
+        return (
+            <LoadingState
+                title="Preparing appointment details"
+                message="We’re loading the doctor profile, live slots, and related recommendations."
+                variant="profile"
+                className="mt-4"
+            />
+        )
+    }
+
+    return (
         <div>
             {/* ----- Doctor Details */}
             <div className="flex flex-col sm:flex-row gap-4">

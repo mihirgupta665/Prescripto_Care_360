@@ -4,12 +4,13 @@ import { AppContext } from '../../context/AppContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import LoadingState from '../../components/LoadingState'
 
 const DoctorProfile = () => {
 
 	const navigate = useNavigate()
 
-	const { dToken, setDToken, profileData, setProfileData, getProfileData, backendUrl } = useContext(DoctorContext)
+	const { dToken, setDToken, profileData, setProfileData, profileLoading, getProfileData, backendUrl } = useContext(DoctorContext)
 	const { currency } = useContext(AppContext)
 
 	const [isEdit, setIsEdit] = useState(false)
@@ -58,7 +59,19 @@ const DoctorProfile = () => {
 
 	}, [dToken])
 
-	return profileData && (
+	if (profileLoading || !profileData) {
+		return (
+			<div className='w-full p-5'>
+				<LoadingState
+					title='Loading doctor profile'
+					message='We’re preparing your practice details, fees, address, and availability.'
+					variant='profile'
+				/>
+			</div>
+		)
+	}
+
+	return (
 		<div>
 
 			<div className='flex flex-col gap-4 m-5'>

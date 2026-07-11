@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AppContext } from "../context/AppContext"
 import { useNavigate } from "react-router-dom"
+import LoadingState from "./LoadingState"
 
 const RelatedDoctors = ({speciality, docId}) => {
 
-    const {doctors} = useContext(AppContext)
+    const { doctors, doctorsLoading } = useContext(AppContext)
     const navigate = useNavigate()
     const [relDoc, setRelDoc] = useState([])
 
@@ -14,6 +15,18 @@ const RelatedDoctors = ({speciality, docId}) => {
             setRelDoc(doctorsData)
         }
     }, [doctors, speciality, docId])
+
+    if (doctorsLoading) {
+        return (
+            <div className="my-16">
+                <LoadingState
+                    title="Matching similar specialists"
+                    message="Pulling related doctors with aligned expertise and availability."
+                    variant="cards"
+                />
+            </div>
+        )
+    }
 
     return(
         <div className="flex flex-col items-center gap-4 my-16 text-gray-900 md:mx-10">

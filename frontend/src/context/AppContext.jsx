@@ -14,8 +14,11 @@ const AppContextProvider = (props) => {
 
     const [doctors, setDoctors] = useState([])
     const [userData, setUserData] = useState(false)
+    const [doctorsLoading, setDoctorsLoading] = useState(true)
+    const [userDataLoading, setUserDataLoading] = useState(false)
 
     const getDoctorsData = async () => {
+        setDoctorsLoading(true)
 
         try {
 
@@ -31,6 +34,9 @@ const AppContextProvider = (props) => {
         catch (error) {
             toast.error(error.message)
         }
+        finally {
+            setDoctorsLoading(false)
+        }
 
     }
 
@@ -40,6 +46,8 @@ const AppContextProvider = (props) => {
 
 
     const loadUserProfileData = async () => {
+        setUserDataLoading(true)
+
         try {
 
             const { data } = await axios.get(backendUrl + "/api/user/get-profile", { headers: { token } })
@@ -56,6 +64,9 @@ const AppContextProvider = (props) => {
         catch (error) {
             toast.error(error.message)
         }
+        finally {
+            setUserDataLoading(false)
+        }
     }
 
     useEffect(() => {
@@ -64,16 +75,19 @@ const AppContextProvider = (props) => {
         }
         else {
             setUserData(null)
+            setUserDataLoading(false)
         }
     }, [token])
 
 
     const value = {
         doctors, getDoctorsData,
+        doctorsLoading,
         currencySymbol,
         backendUrl,
         token, setToken,
         userData, setUserData,
+        userDataLoading,
         loadUserProfileData,
 
     }

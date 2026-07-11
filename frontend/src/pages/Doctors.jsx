@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { AppContext } from "../context/AppContext"
+import LoadingState from "../components/LoadingState"
 
 const Doctors = () => {
 
@@ -8,7 +9,7 @@ const Doctors = () => {
     // console.log(speciality)
     const [filterDoc, setFilterDoc] = useState([])
     const [showFilter, setShowFilter] = useState(false)
-    const { doctors } = useContext(AppContext)
+    const { doctors, doctorsLoading } = useContext(AppContext)
     const navigate = useNavigate()
     const normalizeSpeciality = (value = "") => value.trim().toLowerCase()
 
@@ -24,6 +25,17 @@ const Doctors = () => {
     useEffect(() => {
         applyFilter()
     }, [doctors, speciality])
+
+    if (doctorsLoading) {
+        return (
+            <LoadingState
+                title="Loading our doctor directory"
+                message="We’re gathering specialists, availability, and category matches for you."
+                variant="cards"
+                className="mt-4"
+            />
+        )
+    }
 
     return (
         <div>
