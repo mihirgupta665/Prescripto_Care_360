@@ -108,11 +108,6 @@ Whether viewed as a portfolio project or a production-ready foundation, **Prescr
 <p align="center">
 <b>▶ Click the thumbnail above to watch the complete project walkthrough.</b>
 </p>
-
----
-
-> Replace this placeholder with a clickable YouTube thumbnail demonstrating the complete application.
-
 ---
 
 # 📸 Application Showcase
