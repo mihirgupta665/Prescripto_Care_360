@@ -108,6 +108,7 @@ Whether viewed as a portfolio project or a production-ready foundation, **Prescr
 <p align="center">
 <b>▶ Click the thumbnail above to watch the complete project walkthrough.</b>
 </p>
+
 ---
 
 # 📸 Application Showcase
@@ -825,16 +826,6 @@ Passionate about building scalable applications, solving real-world problems, an
 
 ---
 
-### Let's Connect
-
-[GitHub](https://github.com/mihirgupta665)
-
-[LinkedIn](https://www.linkedin.com/in/mihir-gupta-980173299/)
-
-</div>
-
----
-
 # ⭐ Support the Project
 
 If you found this project useful or inspiring,
@@ -842,6 +833,16 @@ If you found this project useful or inspiring,
 consider giving it a **⭐ Star** on GitHub.
 
 It helps the project reach more developers and motivates continued development of high-quality open-source software.
+
+---
+
+### Let's Connect
+
+[GitHub](https://github.com/mihirgupta665)
+
+[LinkedIn](https://www.linkedin.com/in/mihir-gupta-980173299/)
+
+</div>
 
 ---
 
