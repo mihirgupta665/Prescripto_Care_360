@@ -86,26 +86,30 @@ Whether viewed as a portfolio project or a production-ready foundation, **Prescr
 <p align="center">
 
 <img src="./assets/demo.gif"
-     width="90%"
+     width="100%"
      alt="Prescripto360Care Demo GIF">
 
 </p>
-
-> Replace this placeholder with a **20–30 second GIF** showcasing the complete appointment booking workflow.
 
 ---
 
 # 🎥 Project Walkthrough
 
-> **A complete walkthrough of the Patient Application, Doctor Dashboard, and Admin Panel.**
+> **A complete walkthrough of the Patient Application, Doctor Dashboard, and Administrator Dashboard.**
 
 <p align="center">
-
+<a href="./assets/PrescriptoVideo.mp4">
 <img src="./assets/video-thumbnail.png"
-     width="85%"
-     alt="Project Walkthrough">
-
+     width="100%"
+     alt="Watch Project Walkthrough">
+</a>
 </p>
+
+<p align="center">
+<b>▶ Click the thumbnail above to watch the complete project walkthrough.</b>
+</p>
+
+---
 
 > Replace this placeholder with a clickable YouTube thumbnail demonstrating the complete application.
 
@@ -396,10 +400,10 @@ Prescripto360Care
 │   ├── server.js
 │   └── package.json
 │
-├── screenshots/
 │
 ├── assets/
-│
+│   ├── screenshots/
+|
 └── README.md
 ```
 
@@ -572,7 +576,7 @@ Follow the steps below to run Prescripto360Care on your local machine.
 ## 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Prescripto360Care.git
+git clone https://github.com/mihirgupta665/Prescripto_Care_360.git
 ```
 
 ```bash
@@ -828,11 +832,9 @@ Passionate about building scalable applications, solving real-world problems, an
 
 ### Let's Connect
 
-[GitHub](https://github.com/YOUR_USERNAME)
+[GitHub](https://github.com/mihirgupta665)
 
-[LinkedIn](https://linkedin.com/in/YOUR_LINKEDIN)
-
-[Portfolio](https://YOUR_PORTFOLIO)
+[LinkedIn](https://www.linkedin.com/in/mihir-gupta-980173299/)
 
 </div>
 
