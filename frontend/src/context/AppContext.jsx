@@ -44,6 +44,18 @@ const AppContextProvider = (props) => {
         getDoctorsData()
     }, [])
 
+    useEffect(() => {
+        if (!backendUrl) return
+
+        // Keep-alive ping every 12 minutes (Render spin-down is 15 mins of inactivity)
+        const interval = setInterval(() => {
+            axios.get(backendUrl).catch(() => {})
+        }, 12 * 60 * 1000)
+
+        return () => clearInterval(interval)
+    }, [backendUrl])
+
+
 
     const loadUserProfileData = async () => {
         setUserDataLoading(true)

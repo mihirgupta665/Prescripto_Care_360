@@ -1,19 +1,21 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Doctors from "./pages/Doctors";
-import Login from "./pages/Login";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import MyProfile from "./pages/MyProfile";
-import MyAppointments from "./pages/MyAppointments";
 import Navbar from "./components/Navbar";
-import Appointment from "./pages/Appointment";
-import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import {ToastContainer, toast} from "react-toastify"
+import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import LoadingState from "./components/LoadingState";
+
+const Home = lazy(() => import("./pages/Home"));
+const Doctors = lazy(() => import("./pages/Doctors"));
+const Login = lazy(() => import("./pages/Login"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const MyProfile = lazy(() => import("./pages/MyProfile"));
+const MyAppointments = lazy(() => import("./pages/MyAppointments"));
+const Appointment = lazy(() => import("./pages/Appointment"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => {
     return (
@@ -22,21 +24,32 @@ const App = () => {
             <ToastContainer />
             {/* doctor/:speciality -> Doctors only how */}
             <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/doctors" element={<Doctors />} />
-                <Route path="/doctors/:speciality" element={<Doctors />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/my-profile" element={<MyProfile />} />
-                <Route path="/my-appointments" element={<MyAppointments />} />
-                <Route path="/appointment/:docId" element={<Appointment />} />
-                <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={
+                <div className="my-16">
+                    <LoadingState
+                        title="Loading page"
+                        message="Please wait while we prepare the page content."
+                        variant="cards"
+                    />
+                </div>
+            }>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/doctors" element={<Doctors />} />
+                    <Route path="/doctors/:speciality" element={<Doctors />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/my-profile" element={<MyProfile />} />
+                    <Route path="/my-appointments" element={<MyAppointments />} />
+                    <Route path="/appointment/:docId" element={<Appointment />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </Suspense>
             <Footer />
         </div>
     )
 }
 
 export default App
+

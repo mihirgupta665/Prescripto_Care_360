@@ -94,6 +94,20 @@ const MyAppointments = () => {
     }
 
 
+    const loadRazorpayScript = () => {
+        return new Promise((resolve) => {
+            if (window.Razorpay) {
+                resolve(true)
+                return
+            }
+            const script = document.createElement("script")
+            script.src = "https://checkout.razorpay.com/v1/checkout.js"
+            script.onload = () => resolve(true)
+            script.onerror = () => resolve(false)
+            document.body.appendChild(script)
+        })
+    }
+
     // order need to be created in backend using options
     // now window will be created using the created order received from the backend
     const initPay = (order) => {
@@ -147,7 +161,11 @@ const MyAppointments = () => {
         try {
 
             if (token) {
-
+                const isLoaded = await loadRazorpayScript()
+                if (!isLoaded) {
+                    toast.error("Razorpay SDK failed to load. Are you online?")
+                    return
+                }
 
                 const { data } = await axios.post(backendUrl + "/api/user/payment-razorpay", { appointmentId }, { headers: { token } })
 

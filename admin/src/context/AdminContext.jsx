@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios"
 import {toast} from "react-toastify"
 import {useNavigate} from "react-router-dom"
@@ -22,6 +22,17 @@ const AdminContextProvider = (props) => {
     const [dashLoading, setDashLoading] = useState(false)
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL 
+
+    useEffect(() => {
+        if (!backendUrl) return
+
+        // Keep-alive ping every 12 minutes (Render spin-down is 15 mins of inactivity)
+        const interval = setInterval(() => {
+            axios.get(backendUrl).catch(() => {})
+        }, 12 * 60 * 1000)
+
+        return () => clearInterval(interval)
+    }, [backendUrl]) 
 
     const getAllDoctors = async () => {
         setDoctorsLoading(true)
